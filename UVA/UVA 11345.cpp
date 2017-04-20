@@ -1,5 +1,9 @@
 #include <bits/stdc++.h>
 
+                /* I'm trying to narrow down the common area between all rectangles by maximizing 
+                   the lower x|y and minimizing the upper X|Y, if either x > X or y > Y then 
+                   the rectangle will have -ve area (does not exist) in that case we print 0 */
+
 using namespace std;
 
 #define ll long long
@@ -31,7 +35,7 @@ using namespace std;
 
 int main()
 {
-    output;
+    //output;
     ios_base::sync_with_stdio(0);
     cin.tie(0);
     int tc;
