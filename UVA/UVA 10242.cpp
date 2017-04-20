@@ -1,5 +1,9 @@
 #include <bits/stdc++.h>
 
+                /* I start by sorting the input points then find the common start point between
+                   the two input points, then i subtract x2-x1 and y2-y1 to get the required
+                   answer, i simply iterate to get the x2 and x1 points from the input as well */
+
 using namespace std;
 
 #define ll long long
