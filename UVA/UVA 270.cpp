@@ -3,7 +3,6 @@
 /*
     counting the slope of point Xi with points Xj where j > i
     using maps to count the given slopes and maximize over the greatest count
-    N^2 approach excluding test case loop
 
     got TLE then WA due to taking input incorrectly
 */
