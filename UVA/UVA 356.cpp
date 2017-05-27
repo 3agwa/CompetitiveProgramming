@@ -1,5 +1,16 @@
 #include <bits/stdc++.h>
 
+/*
+
+    first, get the center of the circle
+    second, difuse each cell into 4 points (upper left, upper right, lower left, lower right) 
+    calculate the distance from center to all 4 points
+    if the distance to all points are <= radius then it's inside
+    if the distance of 1 point <= radius then a segment of the cell is inside
+    else nothing happens
+
+*/
+
 using namespace std;
 
 #define ll long long
