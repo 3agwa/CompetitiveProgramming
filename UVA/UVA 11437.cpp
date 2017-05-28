@@ -1,3 +1,12 @@
+/*
+    
+    first thing to do is calculate side lengths of traingle to get AF-CE-BD 
+    then try to find the coordinates for F, E, D using normalization of their equivalent sides
+    now that we have these points, we get points Q, R, P using intersection of 2 line segments 
+    last thing is to calculate the area of the small triangle which could be done on paper to get the formula
+
+*/
+
 #include <bits/stdc++.h>
 
 using namespace std;
