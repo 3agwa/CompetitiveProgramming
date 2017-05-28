@@ -1,3 +1,11 @@
+/*
+    first thing to do is to get the coordinates of all corners of rectangle
+    second thing is to check whether the line is inside the rectangle or not
+    if not, check if the line intersects with any of the 4 sides of the rectangle
+    output answer depending on intersection happened or not
+
+*/
+
 #include <bits/stdc++.h>
 
 using namespace std;
