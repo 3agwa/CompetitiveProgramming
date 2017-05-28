@@ -1,5 +1,13 @@
 #include <bits/stdc++.h>
 
+/*
+
+    iterate over all circles and check which circles intersect with which using the distance between centers and the radii
+    if two circles intersect, add them to adjacency list 
+    iterate over all circles and run bfs on the not visited ones to get biggest component
+
+*/
+
 using namespace std;
 
 #define ll long long
