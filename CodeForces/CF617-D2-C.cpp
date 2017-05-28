@@ -1,3 +1,11 @@
+/*
+
+    idea is to get all distances from all flowers to the 2 fountains
+    iterate over all possible pair of radii, check if all flowers lie within
+    the pair, if so minimize on their summation
+
+*/
+
 #include <bits/stdc++.h>
 
 using namespace std;
