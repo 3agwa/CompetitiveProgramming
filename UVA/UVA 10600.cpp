@@ -1,3 +1,10 @@
+/*
+    find the mst for the main graph
+    iterate over all edges inside the MST, drop the edge and try to form a new MST
+    minimize over newely built MST
+
+*/
+
 #include <bits/stdc++.h>
 
 using namespace std;
