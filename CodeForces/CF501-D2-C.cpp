@@ -1,3 +1,11 @@
+/*
+
+    the idea is to disect the problem, cutting off the leaf nodes level by level.
+    first, push the leaf nodes into the queue
+    find the xor value of the leaf node, TEMP, then decrease TEMP's degree by 1, and xor TEMP with the leaf node
+    save the solution and output it after exiting the loop
+
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
