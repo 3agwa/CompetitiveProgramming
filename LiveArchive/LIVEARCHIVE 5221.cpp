@@ -1,3 +1,10 @@
+/*
+    run bfs from each node to calculate the clicks required to reach 
+    all nodes in the component, then divide the sum by n*(n-1)
+    where N is the number of different nodes in the graph
+    
+*/
+
 #include <bits/stdc++.h>
 
 using namespace std;
