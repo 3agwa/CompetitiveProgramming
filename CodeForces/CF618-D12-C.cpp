@@ -1,3 +1,11 @@
+/*
+    
+    sort all input coordinates to minimize the area
+    calculate the area and check that the points are not collinear (area > 0)
+    print indices of the 3 coordinates
+
+*/
+
 #include <bits/stdc++.h>
 
 using namespace std;
