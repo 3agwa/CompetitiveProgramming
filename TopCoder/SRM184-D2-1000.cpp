@@ -1,3 +1,10 @@
+/*
+
+	1- run dfs from every node and count how many nodes could it reach while traversing
+	2- while running dfs, for each chile count the # of nodes able to reach the child node
+	push the 2 values in a vector and return
+
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
