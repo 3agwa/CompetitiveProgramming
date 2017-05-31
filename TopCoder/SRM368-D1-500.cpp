@@ -1,3 +1,16 @@
+/*
+	
+	enumerate all points, each having a unique idx
+	connect the points in the same collection
+	for all pairs of line segments, check if they intersect at a point or not
+	if they intersect at a point, link that point to the collection of the first and the second line, joining them together
+	if there is no intersection point, then they might intersect in a segment
+	check if there is segment intersection using slopes and check that the points lie inside the line
+	if that happens, iterate over all integer points on the slope and add a connection between that point
+	and the 2 endpoints of the intersection segment
+	finally, run dfs from each idx to count the # of connected components and return the answer
+
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
