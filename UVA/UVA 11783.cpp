@@ -1,3 +1,7 @@
+/*
+    determine whether 2 lines intersect or not, if they do increase their counter
+    iterate over all lines and calculate the ouput, could be deduced on paper
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
