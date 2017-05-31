@@ -1,3 +1,7 @@
+/*
+    iterate over the numbers and maximize over the positive contiguous ones
+*/
+
 #include <bits/stdc++.h>
 
 using namespace std;
