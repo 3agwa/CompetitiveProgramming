@@ -1,3 +1,7 @@
+/*
+    trivial MST problem, direct implementation of prim or kruskal's algorithms
+*/
+
 #include <bits/stdc++.h>
 
 using namespace std;
