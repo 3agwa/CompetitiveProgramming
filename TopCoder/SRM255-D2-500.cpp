@@ -1,3 +1,7 @@
+/*
+    for every list, iterate over the other lists and count the # of occurrence
+    of current word in the list, increment answer accordinly
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
