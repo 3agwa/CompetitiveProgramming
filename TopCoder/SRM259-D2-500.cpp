@@ -1,3 +1,6 @@
+/*
+	checking for the first M such that F(M) is not a prime number
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
