@@ -1,3 +1,6 @@
+/*
+	implement comparator to sort the input strings
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
