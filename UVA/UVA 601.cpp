@@ -1,3 +1,12 @@
+/*
+    save the coordinates of the U cells
+    1- try moving from first column to last column using floodfill
+    2- try moving from first row to last row using floodfill
+    for each U, change it to W and repeat (1), change it back to U after finishing
+    for each U, change it to B and repeat (2), change it back to U after finishing
+    if none generated a msg, then there is no path
+    
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
