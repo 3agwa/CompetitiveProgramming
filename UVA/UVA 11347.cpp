@@ -1,3 +1,10 @@
+/*
+    
+    using prime factorization
+    we're able to determine the divisors of each number in the factorial series
+    multiply them all together to get the accepted solution
+    
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -28,119 +35,6 @@ using namespace std;
 #define endl '\n'
 #define output freopen("output.txt", "w", stdout)
 #define mp(x, y, z) {x, {y, z}}
-
-
-double INF = 1e100;
-double EPS = 1e-7;
-
-struct PT
-{
-    double x, y;
-    PT() {}
-    PT(double x, double y) : x(x), y(y) {}
-    PT(const PT &p) : x(p.x), y(p.y)    {}
-    PT operator + (const PT &p)  const
-    {
-        return PT(x+p.x, y+p.y);
-    }
-    PT operator - (const PT &p)  const
-    {
-        return PT(x-p.x, y-p.y);
-    }
-    PT operator * (double c)     const
-    {
-        return PT(x*c,   y*c  );
-    }
-    PT operator / (double c)     const
-    {
-        return PT(x/c,   y/c  );
-    }
-    bool operator<(const PT &p)  const
-    {
-        return make_pair(x,y)<make_pair(p.x,p.y);
-    }
-    bool operator==(const PT &p)  const
-    {
-        return !(*this < p) && !(p < *this);
-    }
-};
-double dot(PT p, PT q)
-{
-    return p.x*q.x+p.y*q.y;
-}
-double dist2(PT p, PT q)
-{
-    return dot(p-q,p-q);
-}
-double cross(PT p, PT q)
-{
-    return p.x*q.y-p.y*q.x;
-}
-PT norm(PT x, double l)
-{
-    return x * sqrt(l*l / dot(x,x));
-}
-istream &operator>>(istream &is, PT &p)
-{
-    return is >> p.x >> p.y;
-}
-ostream &operator<<(ostream &os, const PT &p)
-{
-    return os << "(" << p.x << "," << p.y << ")";
-}
-/*around the origin*/
-PT RotateCCW90(PT p)
-{
-    return PT(-p.y,p.x);
-}
-PT RotateCW90(PT p)
-{
-    return PT(p.y,-p.x);
-}
-PT RotateCCW(PT p, double t)
-{
-    return PT(p.x*cos(t)-p.y*sin(t), p.x*sin(t)+p.y*cos(t));
-}
-// project point c onto line through a and b (assuming a != b)
-PT ProjectPointLine(PT a, PT b, PT c)
-{
-    return a + (b-a)*dot(c-a, b-a)/dot(b-a, b-a);
-}
-// project point c onto line segment through a and b (assuming a != b)
-PT ProjectPointSegment(PT a, PT b, PT c)
-{
-    double r = dot(c-a, b-a)/dot(b-a,b-a);
-    if (r < 0) return a;
-    if (r > 1) return b;
-    return a + (b-a)*r;
-}
-
-bool intersection(PT a, PT b, PT c, PT d) // 1, 2 - 1, 2
-{
-    double a1 = b.y-a.y, b1 = a.x-b.x, c1 = a1*a.x + b1*a.y;
-    double a2 = d.y-c.y, b2 = c.x-d.x, c2 = a2*c.x + b2*c.y;
-    double det = a1*b2 - a2*b1;
-    if (!det)
-    {
-        return false;
-    }
-    double x = (b2*c1 - b1*c2) / det;
-    double y = (a1*c2 - a2*c1) / det;
-    return (min(a.x, b.x) <= x && x <= max(a.x, b.x) && min(a.y, b.y) <= y && y <= max(a.y, b.y) &&
-            min(c.x, d.x) <= x && x <= max(c.x, d.x) && min(c.y, d.y) <= y && y <= max(c.y, d.y));
-}
-
-
-PT intersection2(PT a, PT b, PT c, PT d) // 1, 2 - 1, 2
-{
-    double a1 = b.y-a.y, b1 = a.x-b.x, c1 = a1*a.x + b1*a.y;
-    double a2 = d.y-c.y, b2 = c.x-d.x, c2 = a2*c.x + b2*c.y;
-    double det = a1*b2 - a2*b1;
-    if (!det) return {-INT_MAX, INT_MAX};
-    double x = (b2*c1 - b1*c2) / det;
-    double y = (a1*c2 - a2*c1) / det;
-    return {x, y};
-}
 
 set<int> st;
 mapii mp;
@@ -202,9 +96,8 @@ ull hoba(ull n, int s)
 
 int main()
 {
-    output;
-    //ios_base::sync_with_stdio(0);
-    //cin.tie(0);
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
 
     int tc;
     cin >> tc;
