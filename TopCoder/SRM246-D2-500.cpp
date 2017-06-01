@@ -1,3 +1,6 @@
+/*
+	split the stirng into 2 ints in each iteration, just check that you don't split in the last iteration
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
