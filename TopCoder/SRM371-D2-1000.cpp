@@ -1,3 +1,8 @@
+/*
+	for each cell, find how many cells could deliver water to that cell using floodfill
+	sort coordinates based on # of cells that could pour water in the selected cell (descendingly)
+	run floodfill from each unvisited cell and count the solution
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
