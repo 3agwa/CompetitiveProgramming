@@ -1,3 +1,7 @@
+/*
+    for L <= 26, min weight = 0, solution is multiplication rule 26*25*... or using permutation
+    for L > 26, generate the smallest weight and return the # of strings with min weight
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
