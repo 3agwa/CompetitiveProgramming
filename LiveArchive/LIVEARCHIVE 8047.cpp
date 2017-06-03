@@ -1,3 +1,9 @@
+/*
+    for every a[i] != b[i], run bfs from a[i] to get all the letters it could reach
+    if letter b[i] was not found, output no
+    repeat till the string ends
+    if the 2 lengths are not the same, answer is no
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
