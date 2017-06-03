@@ -1,3 +1,6 @@
+/*
+	calculate the increase/decrease ratio and push value to new vector
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
