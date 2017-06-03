@@ -1,3 +1,7 @@
+/*
+    imagine the rectangles as grids, and boarders as visited cells
+    now try to flood from each non-visited cell and count the number of components
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
