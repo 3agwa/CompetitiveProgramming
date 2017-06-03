@@ -1,3 +1,7 @@
+/*
+	alternate between length-length, width-width and length-width, length width
+	1 side must be > hole side, other side could be >=
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
