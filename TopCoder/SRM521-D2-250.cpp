@@ -1,3 +1,7 @@
+/*
+	sort the 3 numbers, if the last 2 are equal then the answer is 2*vec[1], else 2*vec[1]+1
+	simple math
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
