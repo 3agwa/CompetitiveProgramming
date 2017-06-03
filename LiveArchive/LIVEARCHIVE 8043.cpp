@@ -1,3 +1,9 @@
+/*
+    
+    binary search on C that satisfies the Velocity equation v = d/t
+    therefore T = summation of Di/(Vi+C)
+    pick -ve smallest speed as start, anything smaller will lead to -ve distance in a segment
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -38,7 +44,7 @@ double solve(double mid)
     double sum = 0;
     rep(i, 0, sz(dist))
     {
-        sum += (dist[i] / (vel[i] - mid));
+        sum += (dist[i] / (vel[i] + mid));
     }
     return sum;
 }
