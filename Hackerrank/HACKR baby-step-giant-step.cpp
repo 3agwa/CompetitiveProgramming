@@ -1,3 +1,6 @@
+/*
+    relations could be deduced using pen and paper
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
