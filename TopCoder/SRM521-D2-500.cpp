@@ -1,3 +1,7 @@
+/*
+	push braces into stack, if the top is ( and the incoming is ), pop the top of the stack
+	answer is the size of the stack
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
