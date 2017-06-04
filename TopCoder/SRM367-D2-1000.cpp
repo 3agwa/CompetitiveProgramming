@@ -1,3 +1,9 @@
+/*
+    sort the input as the offsets are not sorted
+    try grouping segments together and get the minimum answer
+    the total sum of grouping is offset[j]+size[j] - offset[i]
+    # of packets is the ceil of (totalsum/maxData)
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
