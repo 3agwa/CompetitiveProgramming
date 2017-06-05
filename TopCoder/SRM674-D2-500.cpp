@@ -1,3 +1,7 @@
+/*
+    for each 2 points, get the slope and compare it to the rest of the points
+    count those with the same slope and those with -(1/slope) --> parallel and perpendicular pts
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
