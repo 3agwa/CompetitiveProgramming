@@ -1,3 +1,6 @@
+/*
+    get all densities and minimize over each one, return minimum answer
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
