@@ -1,3 +1,11 @@
+/*
+    for each cell, we need to keep track of which cell reached it and through which direction
+    parent array keeps track of that
+    run bfs from the first cell after moving 1 step till it reaches the destination cell
+    if it reached the destination cell, re-construct the path taken from start to destination
+    output the solution as said in the statement to avoid presentation errors
+    keep in mind that the input string could include space, hence the getline
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
