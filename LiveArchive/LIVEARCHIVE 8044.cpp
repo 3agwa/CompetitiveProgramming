@@ -1,3 +1,7 @@
+/*
+    pre-calculate the best solution for each interval
+    try grouping ranges and minimize over the next grouping phase
+*/
 #include <bits/stdc++.h>
 #include <chrono>
 
