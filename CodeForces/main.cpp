@@ -1,3 +1,12 @@
+/*
+    after writing a recursive dp approach memoizing on level and sum, it lead to memory limit
+    i had to transer this code into iterative dp
+    now we still have the same memory, we have to drop a parameter
+    since the building is based on the next state, then i could only keep track of that state
+    so we decrease from [max_level][max_sum] to [2][max_sum]
+    we only need to keep track of the following level, and build this level's answer based on it
+    again, had some help with the idea, wasted a lot of time on this but i gained a good amount of experience from it
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
