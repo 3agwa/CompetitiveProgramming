@@ -1,3 +1,15 @@
+/*
+    the idea is, for each index in the msg, find the strings that could be inserted starting this index
+    and also matching the message, then move forward
+    if the base case was not reached, then it's impossible to construct the message
+    if the base case is reached only once, then i could construct that message
+    to re-cornstruct the msg i keep track of the indices picked from the dictionary
+    and return them as a solution
+    lastly, if the base case is visited multiple times, then it's ambiguous
+    one thing about this, it lead to overflow which lead to return a -ve value
+    so i had to minimize the return value to avoid overflow
+    i had some help with this, but it really opened my mind on how to approach dp problems in general
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
