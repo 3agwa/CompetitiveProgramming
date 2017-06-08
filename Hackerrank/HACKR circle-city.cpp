@@ -1,3 +1,9 @@
+/*
+    using circle equation (x*x + y*y = r*r)
+    then, y = sqrt(r*r - x*x)
+    we iterate over all Xs (till sqrt(D)) and find the corresponding Ys
+    if found, increment the counter by 4 as this points exists in all quadrants with different signs
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
