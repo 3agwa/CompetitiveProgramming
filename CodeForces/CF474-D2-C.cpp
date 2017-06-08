@@ -1,3 +1,8 @@
+/*
+    for each point, subtract the value of "home" from it, so we can translate about origin
+    we try all configurations of rotations and check whether the 4 new points for a non-empty square or not
+    we need to add the home value we subtracted earlier as we're (supposedly) rotating about the home, not the origin
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
