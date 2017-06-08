@@ -1,3 +1,8 @@
+/*
+    try dropping each edge in the tree, count the # of components
+    if the # of components is 2, get the leaves of the 2 components
+    lastly, run bfs form the leaves to get the maximum length possible
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
