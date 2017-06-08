@@ -1,3 +1,8 @@
+/*
+    use sieve to generate the prime numbers
+    then for each number, get its prime factors, count the even and the odd ones
+    output depending on the even and odd numbers
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
