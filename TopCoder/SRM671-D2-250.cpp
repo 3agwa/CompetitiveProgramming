@@ -1,3 +1,8 @@
+/*
+    iterate over the smallest between L and W
+    binary search to get the largest side length such that i*L <= M
+    maximize over output values
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
