@@ -1,3 +1,6 @@
+/*
+	sort the elements and increment as long as weight <= 5000
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
