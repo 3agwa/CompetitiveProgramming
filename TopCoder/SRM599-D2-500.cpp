@@ -1,3 +1,8 @@
+/*
+    get the prime factors of both numbers
+    the prime factors of C must be <= prime factors of A
+    both factors of the 2 numbers are then multiplied by D and B respectively
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
