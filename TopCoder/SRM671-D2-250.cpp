@@ -52,7 +52,7 @@ public:
                     else en = mid - 1;
                 }
                 //cout << i << " " << ret << endl;
-                mx = max(mx, i*ret);
+                if (i*ret <= M) mx = max(mx, i*ret);
             }
         }
         else
@@ -67,7 +67,7 @@ public:
                     else en = mid - 1;
                 }
                 //cout << i << " " << ret << endl;
-                mx = max(mx, i*ret);
+                if (i*ret <= M) mx = max(mx, i*ret);
             }
         }
         return mx;
