@@ -1,3 +1,11 @@
+/*
+    we have (n-k) positions that can't go to 1, hence we have (n-k) options
+    in each index, we could place any of the (n-k) options
+    therefore, we have (n-k)^(n-k) places that can't go to house #1
+    we have to multiply that by a factor
+    i deduced that factor from dividing the given answer / (n-k)^(n-k)
+    factor equals k^(k-1)
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
