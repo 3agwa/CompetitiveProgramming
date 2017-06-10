@@ -1,3 +1,6 @@
+/*
+    solution is summation of NpR such that R[min, max], N = size of grid ^2
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
