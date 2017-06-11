@@ -1,3 +1,8 @@
+/*
+	time limit won't allow for n^3 solution
+	so we need to calculate a*b = d/c
+	count the occurrences using map and increment when the value is found
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
