@@ -1,3 +1,8 @@
+/*
+    sort the 2 arrays to get the best profit (max size, min time)
+    mark the taken places
+    iterate over the non-taken, increment the capacity and tent count
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
