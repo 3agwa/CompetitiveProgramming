@@ -1,3 +1,8 @@
+/*
+	chunk down the number using mod and division
+	count the remainder in a map
+	iterate over numbers from 0-9 and count those that are flagged as true
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
