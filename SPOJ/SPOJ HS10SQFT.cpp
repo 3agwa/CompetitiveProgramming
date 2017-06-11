@@ -1,3 +1,7 @@
+/*
+    traced the input on paper, found that it'll output correctly if we iterate till sqrt(sqrt(n))
+    solve for b (if exists) given the current index
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
