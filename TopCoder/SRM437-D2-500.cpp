@@ -1,3 +1,7 @@
+/*
+    recursively generate different combinations of the string
+    when the base case is met, maximize over the initial value
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
