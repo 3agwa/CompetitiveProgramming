@@ -1,3 +1,20 @@
+/*
+    let's consider each line segment as a node, so first thing we do is that we enumerate the line segments
+    then, we need to find the shortest distance from upper bank to lower bank
+    this could be done either by crossing directly from one bank to another or by passing onto some islands
+    we should note that the distance from a segment on a polygon to another segment on the same polygon is 0
+    now, for each line segment on upper bank, we need to find some stuff
+    we need to connect upper bank with lower bank
+    connect upper bank with an island (if exists)
+    connect island (if exists) with another island (if exists)
+    connect island (if exists) with lower bank
+    now, connecting 2 line segments is basically finding the projection of each end point onto the other line
+    projection of point on segment returns a point, so we need to calculate the distance between projection and starting point
+    this will result in the shorting distance between 2 line segments
+    after connecting all the above with their corresponding distances, we need to find the shortest path from upper to lower bank
+    therefore, we run dijkstra from each node in the upper bank, and stopping when we reach the lower bank
+    indices on the lower bank are marked as true, that's why we break the dijkstra loop when we reach a segment on the lower bank
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
