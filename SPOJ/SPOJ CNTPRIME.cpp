@@ -1,3 +1,13 @@
+/*
+    first of all, we need to get the prime numbers in our range
+    this could be done using sieve, pre-process them once before test cases
+    
+    now, we'll update and answer the queries using segment tree
+    but since the updates are a lot, we'll use the help of lazy propagation
+    when updating, if the node has a prime number, then tree[node] = the interval [en-st+1] inclusive
+    if we're updating a non-prime number, tree[node] = 0;
+    we do the same check with the lazy propagation
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
