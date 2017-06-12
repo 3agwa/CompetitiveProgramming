@@ -27,25 +27,28 @@ using namespace std;
 #define reset(n, m) memset(n, m, sizeof n)
 #define endl '\n'
 #define output freopen("output.txt", "w", stdout)
-#define mp(x, y, z) {x, {y, z}}
+#define mp(x, y, z) {{x, y}, z}
 
-class OptimalQueues
+int main()
 {
-public:
-    int minWaitingTime(vector <int> clientArrivals, int tellerCount, int serviceTime)
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    int n;
+    while(cin >> n && n)
     {
-        sort(clientArrivals.rbegin(), clientArrivals.rend());
-        int curr = 0, mx = 0;
-        for(int i = 0; i < sz(clientArrivals); i+= tellerCount)
+        vi vec(n);
+        rep(i, 0, n) cin >> vec[i];
+        sort(all(vec));
+        ll sum = 0;
+        rep(i, 0, n)
         {
-            curr += serviceTime;
-            rep(j, i, min(sz(clientArrivals), i + tellerCount))
+            rep(j, i+1, n)
             {
-                mx = max(mx, curr + clientArrivals[j]);
+                int temp = upper_bound(all(vec), vec[i]+vec[j]) - vec.begin();
+                sum += n-temp;
             }
         }
-        return mx;
+        cout << sum << endl;
     }
-};
-
-
+    return 0;
+}
