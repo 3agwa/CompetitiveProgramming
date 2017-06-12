@@ -1,3 +1,7 @@
+/*
+    sort the input in descending order
+    simulate the queue and get the minimum time possible
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
