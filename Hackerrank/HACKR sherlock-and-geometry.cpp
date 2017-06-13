@@ -1,3 +1,8 @@
+/*
+    for each 2 consecutive lines, get the points of intersection between that line and the circle
+    get the projection of each of those lines on line AB
+    if the projected point is the same as original point, then it lies on AB line segment
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
