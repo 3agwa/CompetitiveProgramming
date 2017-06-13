@@ -1,3 +1,8 @@
+/*
+    try to form N ducks from each cell vertically and horizontally (if possible)
+    calculate the distance required for that formation
+    return minimum distance
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
