@@ -1,3 +1,7 @@
+/*
+    fastest thing is to make all letters as the first one
+    if the first one is Y, we'll flip 1 more time
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
