@@ -1,3 +1,7 @@
+/*
+    simulate the passing of months/days, increment the time (in seconds) accordingly
+    increment the months array (index 1) by 1 if the year is a leap year
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
