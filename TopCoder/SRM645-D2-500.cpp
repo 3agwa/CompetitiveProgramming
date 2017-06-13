@@ -1,3 +1,8 @@
+/*
+    sort the elements according to their positions
+    run ternary search on starting position of the cars
+    return minimum distance
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
