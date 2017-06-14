@@ -1,3 +1,10 @@
+/*
+	take input correctly, sort the intervals
+	try to pick/leave the current index
+	if the current index is greater than any interval [a, b], we should iterate over that interval
+	and check whether there's a wolf placed in there or not
+	return immediately if there is no wolf there
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
