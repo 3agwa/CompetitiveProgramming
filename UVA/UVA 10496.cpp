@@ -1,3 +1,8 @@
+/*
+    brute force approach, starting from start position, recurse from each visited cell
+    mark the cells as unvisited, recurse, mark them back as visited
+    return the minimum solution among all solutions
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
