@@ -1,3 +1,7 @@
+/*
+	after sorting the input, count for each element the # of times it will appear in the permutations
+	memoize over the index and the current element value (before incrementing it)
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
