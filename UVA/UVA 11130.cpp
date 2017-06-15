@@ -1,3 +1,9 @@
+/*
+    first, get the overall traveled distance by the ball
+    the distance traveled over the x-axis is dist*cos(theta)
+    distance traveled over y-axis is dist*sin(theta)
+    the solution is the rounding of both answers
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
