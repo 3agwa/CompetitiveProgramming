@@ -1,3 +1,24 @@
+/*
+    first thing to notice is that we could add N circles in the ith row
+    and either add N-1 circles in the I+1th row or add N circles in the I+1th row
+    adding N circles in the following row comes with a price
+    
+    the idea is, given some height H, calculate the number of circles that could fit in a 2(H+W)
+    since we don't have W, we'll get it from the equation woodLength = 2*(H+W), solve for W
+    now to calculate the # of circles in a row, it'll simply be W/(2*r)
+    
+    now Case1: circles placed as N, N-1, N, N-1
+    since we already know the height, we could deduce the # of odd and even heights
+    odd heights will contain N circles, even heights will contain N-1
+    
+    Case2: circles places as N, N, N, N
+    from the test case, we could notice that the above allignment could occur
+    if we have extra R space in the row
+    so we need to check the remaining width after placing the N circles
+    if it's greater than R, then we the placement could go as N, N, N, N
+    
+    finally, maximize the output over the 2 cases
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -41,7 +62,7 @@ public:
     {
         double hoba = woodlength, r = radius;
         int mx = 0;
-        erep(i, 0, 100000)
+        erep(i, 0, 100)
         {
             int h = i+1;
             double d1 = (double)i*sqrt(3)*r + 2*r;
