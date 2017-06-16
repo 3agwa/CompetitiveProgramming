@@ -1,3 +1,8 @@
+/*
+    let k(x) + b = 0, then x = -b/k
+    if k == 0, the solution is undefined
+    insert different X values in set, output the size of the set
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
