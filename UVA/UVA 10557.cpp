@@ -1,3 +1,10 @@
+/*
+    run bellman ford from starting node to all other nodes
+    if the cost to a node is <= 0, we don't need to relax this node
+    try relaxing one more time, if this happened then there exists a cycle
+    then we need to check if we could reach node n-1 from this current node
+    case is winnable if the distance to n-1 is > 0 or if the above condition was true
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
