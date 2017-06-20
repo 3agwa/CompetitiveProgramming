@@ -1,3 +1,9 @@
+/*
+    this problem is solved using ternary search
+    get the min/max intervals from input (x-axis)
+    run ternary search and minimize over the X with smallest distance
+    print the x-axis and it's corresponding min distance
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
