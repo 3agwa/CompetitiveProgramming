@@ -1,3 +1,9 @@
+/*
+    the idea is, for every substring, try to find how many permutations occured before that substring
+    # of permutations = N! / a! * b! * c! * ... * z! this is done using multinomial theory
+    divide that by size of substring to know how many occurances for each letter
+    iterate over the letter that appeared before the current x[i] and increment its count*val
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
