@@ -1,3 +1,8 @@
+/*
+	greedy solution, get all colors/3 and get the colors%3
+	now for the rem, we can either mix them (take maximum between all mods)
+	or group 1 color together, minimize over those 2 cases
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
