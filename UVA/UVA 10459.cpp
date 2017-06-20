@@ -1,3 +1,8 @@
+/*
+    the idea is to run dfs from leaf nodes and count 
+    the maximum cost to reach every node while traversing
+    keep track of the last node (maximum cost) node you reached so far
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
