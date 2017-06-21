@@ -1,3 +1,9 @@
+/*
+    for each string, get the smallest lexicographical one ans add it to the map
+    this will save us a lot of insertions and time
+    "solve" transfroms the string as required in the problem
+    "fix" gets the lexicographically smallest string among the rotations
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
