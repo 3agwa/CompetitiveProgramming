@@ -1,3 +1,8 @@
+/*
+	using the fact the xor is cyclic, we can get the xor of [0, b]
+	xorr it with [0, a-1] to remove anything before [a, b]
+	return solution
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
