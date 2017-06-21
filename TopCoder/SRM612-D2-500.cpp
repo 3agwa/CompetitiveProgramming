@@ -1,3 +1,9 @@
+/*
+    dp counting problem
+    either paste the copied data 
+    or copy then paste them
+    minimize over all solutions
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
