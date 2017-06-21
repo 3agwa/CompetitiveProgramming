@@ -1,3 +1,9 @@
+/*
+    generate power set of nodes
+    for each set, check if they're all connected with each other or not
+    if they are, try adding 1 node, if this node is connected to all of them, then this is not maximal
+    otherwise increment as this is a maximal clique
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
