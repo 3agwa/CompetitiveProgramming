@@ -1,3 +1,6 @@
+/*
+    sort all input, pass on column by column, get maximum value and add it to our solution
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
