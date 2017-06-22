@@ -1,3 +1,14 @@
+/*
+    after taking the input, sort it and do path compression on its values
+    then for each (add) query, increment the compressed position in the segment tree
+    in the (get) query, we'll get the k-th smallest element in the tree
+    we traverse the tree according to remaining K
+    for each range we need to find the K-th smallest element in it
+    we move to left/right child depending on their values
+    when we reach our node, return its value (compressed index)
+    we'll have to add a reverse map to get the original index of the compressed index
+    as we return a compressed index from query, print the rev[qry()]
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
