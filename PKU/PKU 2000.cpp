@@ -1,3 +1,6 @@
+/*
+    pre-process the data and output the sum at required index
+*/
 //#include <bits/stdc++.h>
 #include <cstring>
 #include <map>
