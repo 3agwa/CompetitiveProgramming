@@ -1,3 +1,6 @@
+/*
+    use inclusion exclusion principal to solve this problem
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -23,11 +26,11 @@ using namespace std;
 #define sz(v) ((int)((v).size()))
 #define pie  acos(-1)
 #define mod(n,m) ((n % m + m) % m)
-#define eps (1e-8)
+#define eps (1e-6)
 #define reset(n, m) memset(n, m, sizeof n)
 #define endl '\n'
 #define output freopen("output.txt", "w", stdout)
-#define mp(x, y, z) {{x, y}, z}
+#define mp(x, y, z) {x, {y, z}}
 
 
 double INF = 1e100;
@@ -115,11 +118,75 @@ PT ProjectPointSegment(PT a, PT b, PT c)
     return a + (b-a)*r;
 }
 
-
-int main()
+class BoxUnion
 {
-    //ios_base::sync_with_stdio(0);
-    //cin.tie(0);
+public:
 
-    return 0;
-}
+    PT a[3], c[3];
+
+    int area(PT a, PT c)
+    {
+        return max((double)0, c.x-a.x) * max((double)0, c.y-a.y);
+    }
+
+    pair< PT, PT > intersection(PT i, PT j, PT ii, PT jj)
+    {
+        double aa, bb, cc, dd;
+        aa = max(i.x, ii.x), bb = max(i.y, ii.y), cc = min(j.x, jj.x), dd = min(j.y, jj.y);
+        PT x(aa, bb), y(cc, dd);
+        return {x, y};
+    }
+
+    int area(vector <string> rectangles)
+    {
+        rep(i, 0, sz(rectangles)) rectangles[i] += " ";
+        rep(i, 0, sz(rectangles))
+        {
+            string aa = rectangles[i].substr(0, rectangles[i].find(" "));
+            rectangles[i].erase(0, rectangles[i].find(" ") + 1);
+            string bb = rectangles[i].substr(0, rectangles[i].find(" "));
+            rectangles[i].erase(0, rectangles[i].find(" ") + 1);
+            string cc = rectangles[i].substr(0, rectangles[i].find(" "));
+            rectangles[i].erase(0, rectangles[i].find(" ") + 1);
+            string dd = rectangles[i].substr(0, rectangles[i].find(" "));
+            rectangles[i].erase(0, rectangles[i].find(" ") + 1);
+            double temp = 0;
+            rep(j, 0, sz(aa)) temp = temp*10 + aa[j]-48;
+            a[i].x = temp;
+            temp = 0;
+
+            rep(j, 0, sz(bb)) temp = temp*10 + bb[j]-48;
+            a[i].y = temp;
+            temp = 0;
+
+            rep(j, 0, sz(cc)) temp = temp*10 + cc[j]-48;
+            c[i].x = temp;
+            temp = 0;
+
+            rep(j, 0, sz(dd)) temp = temp*10 + dd[j]-48;
+            c[i].y = temp;
+        }
+        int n = sz(rectangles);
+        int ret = 0;
+
+        if (n == 1) return area(a[0], c[0]);
+        else if (n == 2)
+        {
+            ret += area(a[0], c[0]);
+            ret += area(a[1], c[1]);
+            pair< PT, PT > hoba = intersection(a[0], c[0], a[1], c[1]);
+            ret -= area(hoba.first, hoba.second);
+            return abs(ret);
+        }
+        ret += area(a[0], c[0]);
+        ret += area(a[1], c[1]);
+        ret += area(a[2], c[2]);
+        pair< PT, PT > h1 = intersection(a[0], c[0], a[1], c[1]);
+        pair< PT, PT > h2 = intersection(a[1], c[1], a[2], c[2]);
+        pair< PT, PT > h3 = intersection(a[2], c[2], a[0], c[0]);
+        pair< PT, PT > h4 = intersection(h1.first, h1.second, a[2], c[2]);
+        ret -= (area(h1.first, h1.second) + area(h2.first, h2.second) + area(h3.first, h3.second));
+        ret += area(h4.first, h4.second);
+        return ret;
+    }
+};
