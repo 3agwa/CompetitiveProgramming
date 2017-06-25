@@ -1,3 +1,6 @@
+/*
+    nothing special, basic implementation of the solution.
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
