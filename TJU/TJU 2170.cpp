@@ -1,3 +1,7 @@
+/*
+    pick every edge as min edge, connect components till start and end are in the same component
+    minimize over edge weights
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
