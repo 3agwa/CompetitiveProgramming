@@ -29,28 +29,17 @@ using namespace std;
 #define output freopen("output.txt", "w", stdout)
 #define mp(x, y, z) {{x, y}, z}
 
-int arr[1000001];
-int freq[26];
+vb visited;
+vvi node;
+int k, cnt;
 
-void solve(int n, bool hoba)
+void dfs(int v)
 {
-    erep(i, 2, n)
+    visited[v] = true;
+    cnt++;
+    rep(i, 0, sz(node[v]))
     {
-        int x = i;
-        for(int j = 2; j*j <= x; j++)
-        {
-            while(x%j == 0)
-            {
-                x/=j;
-                if (hoba) arr[j]++;
-                else arr[j]--;
-            }
-        }
-        if (x > 1)
-        {
-            if (hoba) arr[x]++;
-            else arr[x]--;
-        }
+        if (!visited[node[v][i]]) dfs(node[v][i]);
     }
 }
 
@@ -58,37 +47,46 @@ int main()
 {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
-    string x;
-    while(cin >> x)
+    int n, m;
+    while(cin >> n && n)
     {
-        reset(freq, 0);
-        rep(i, 0, sz(x)) freq[x[i] - 'a']++;
-        solve(sz(x), 1);
-        rep(i, 0, 26)
+        node = vvi(n+1);
+        visited = vb(n+1, false);
+        vi vec(n+1, false);
+        cin >> m >> k;
+        while(m--)
         {
-            if (freq[i] > 1) solve(freq[i], 0);
+            int u, v;
+            cin >> u >> v;
+            node[u].push_back(v);
+            node[v].push_back(u);
+            vec[u]++, vec[v]++;
         }
-        if (arr[5] >= arr[2])
+        while(true)
         {
-            arr[5] -= arr[2];
-            arr[2] = 0;
-        }
-        else
-        {
-            arr[2] -= arr[5];
-            arr[5] = 0;
-        }
-        int ans = 1;
-        erep(i, 1, sz(x))
-        {
-            while(arr[i])
+            bool temp = false;
+            erep(i, 1, n)
             {
-                ans *= i;
-                arr[i]--;
-                ans %= 10;
+                if (!visited[i] && vec[i] < k)
+                {
+                    visited[i] = true; // mark to disconnect
+                    rep(j, 0, sz(node[i])) vec[node[i][j]]--;
+                    temp = true;
+                }
+            }
+            if (!temp) break;
+        }
+        int ret = 0;
+        erep(i, 1, n)
+        {
+            if (!visited[i])
+            {
+                cnt = 0;
+                dfs(i);
+                ret = max(ret, cnt);
             }
         }
-        cout << ans << endl;
+        cout << ret << endl;
     }
     return 0;
 }
