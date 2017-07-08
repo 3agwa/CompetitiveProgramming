@@ -1,11 +1,9 @@
 #include <bits/stdc++.h>
+
 /*
-    for each point, check the segments which it may fall onto
-    then, get Y-coordinate if the point falls onto the segment
-    this could be done using slope, since we have slope of segment
-    and slope X coordinate of intersection
-    then get the closest segment to the point (highest Y <= Point.Y)
-    lastly, check which edge the point will fall off from (lowest Y)
+    dp problem, start solving with 1 (as it requires no leading zeroes)
+    for each position, add 0 or 1, if the count of zeroes or ones is greater than n/2, we return (condition is not met)
+    if all conditions are met, we should make sure that k divides this number
 */
 
 using namespace std;
