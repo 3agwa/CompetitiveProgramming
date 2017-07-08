@@ -1,3 +1,8 @@
+/*
+    for every non-visited bit, try to visit it
+    keep notice of the last bit you used to gain the extra bonus if it exists
+    maximize over the solutions
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
