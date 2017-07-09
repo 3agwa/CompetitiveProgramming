@@ -1,3 +1,10 @@
+/*
+
+    for each unvisited bit, check the following and previous 2 cells
+    if both are on, turn them off, turn on the current bit and recurse
+    minimize over the bitcount of all calls
+    
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
