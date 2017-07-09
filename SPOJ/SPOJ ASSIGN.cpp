@@ -1,3 +1,6 @@
+/*
+    iterate over all options, if the bit is not turned on, turn it on and solve for the next problem
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
