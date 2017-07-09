@@ -1,3 +1,7 @@
+/*
+    modified bfs, if the current value is not visited, mark it as visited and continue
+    else keep running bfs to reach all multiples of starting node
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
