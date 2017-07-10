@@ -1,3 +1,8 @@
+/*
+    push components of DNA in a queue, if the current string could be found as a substring of sequence
+    this means that i could erase some letters from the beginning and the end to reach that string
+    keep adding characters till we can't find that substring in the sequence and return it
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
