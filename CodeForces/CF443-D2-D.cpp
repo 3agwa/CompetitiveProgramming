@@ -1,3 +1,7 @@
+/*
+    we want to multiply all previous (1-prob[j]) by prob[j]
+    we sort to maximize over the values
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
