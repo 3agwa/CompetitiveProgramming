@@ -1,3 +1,9 @@
+/*
+    after tracing some samples, you can find out that it's a normal floodfill with extra steps
+    if the level is even, we should check the lower and upper left corners
+    if the level is odd, we should check the lower and upper right corners
+    count the number of times you collide with a '#' and return the answer
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
