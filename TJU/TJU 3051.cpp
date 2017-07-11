@@ -1,3 +1,8 @@
+/*
+    calculate win/draw/lose ratio
+    each match we will either win/draw/lose, recurse an subtract the points according 
+    to the current transition and multiply by the transition's probability
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
