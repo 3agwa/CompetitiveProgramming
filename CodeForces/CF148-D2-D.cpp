@@ -1,3 +1,9 @@
+/*
+    we divide the problem into two parts, the princess's turn and the dragon's turn
+    if the princess is now playing, she could either win in this turn or pick a black mouse
+    if it's the dragon's turn, he could pick a black one and another black mouse escapes
+    or he could pick a black mouse and a white mouse escapes
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
