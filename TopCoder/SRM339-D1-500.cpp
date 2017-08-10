@@ -1,3 +1,11 @@
+/*
+    we'll dp over the states we have, we'll need to keep track of the sum so far, the remaining rounds and the bet value
+    the bet is always a power of 2, so it's better to memoize over the size of power instead the whole value 
+    we have 2 options, either to win the bet, hence we claim the value and add it to our current sum, and play the next round
+    or lose this round, bet is multiplied by 2 and the current value decreases by the old bet
+    if our sum is >= target we return 1
+    if no rounds are left we return 0
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
