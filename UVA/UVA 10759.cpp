@@ -1,3 +1,9 @@
+/*
+    for each cube, select a number [1, 6] and move to the next cube
+    when finishing all cubes, check if the current sum is >= target sum
+    after that, get the gcd between dp and 6^n (all possible combinations)
+    divide dp value and 6^n by their gcd
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
