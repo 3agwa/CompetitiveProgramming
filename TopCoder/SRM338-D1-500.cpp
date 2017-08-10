@@ -1,3 +1,9 @@
+/*
+    after T swaps, we have 2 options
+    either index A was not changed, or it was changed (T-1) times and changed back to desired position in the T-th swap
+    so the probability of staying the same is (n-2) / (n)
+    probability of the swaps is (1-p)/(n-1) * probability of selected the desired index (1/n) *  remaining indices (n-1)
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
