@@ -1,3 +1,14 @@
+
+/*
+    first choice is to pick the first number in queue if it is the desired number
+    otherwise i'll have to simulate the 2 operations, if the number is odd then i move the first member to the last of the queue
+    if it's even we pop the first element
+    so, probability of picking 4 is 1/6
+    probability of an even number != 4 is 1/3
+    probability of an odd number is 1/2
+    one last thing, if the queue has only 1 member, i have to check whether or not this member is the desired one or not
+*/
+
 #include <bits/stdc++.h>
 
 using namespace std;
