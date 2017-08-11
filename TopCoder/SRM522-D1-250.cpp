@@ -1,3 +1,7 @@
+/*
+    remove all duplicates from the string, if there's a substring of size > 1 containing the same element, compress it
+    we'll represent the elements with a mask, we'll turn on the bits according to the player's turn and run the dp
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -23,59 +27,75 @@ using namespace std;
 #define sz(v) ((int)((v).size()))
 #define pie  acos(-1)
 #define mod(n,m) ((n % m + m) % m)
-#define eps (1e-8)
+#define eps (1e-9)
 #define reset(n, m) memset(n, m, sizeof n)
 #define endl '\n'
 #define output freopen("output.txt", "w", stdout)
-#define mp(x, y, z) {x, {y, z}}
+#define mp(x, y, z) {{x, y}, z}
 
-int total, n, memo[1000001][2];
-bool visited[1000001];
-vi vec;
+string x;
+int n, memo[(1<<14) + 1][2];
 
-int solve(int rem, bool player)
+int solve(int mask, bool turn)
 {
-    if (rem == total)
+    if (__builtin_popcount(mask) == sz(x)-1)
     {
-        return (!player);
+        rep(i, 0, sz(x))
+        {
+            if (!(mask & (1<<i)))
+            {
+                if (x[i] == 'A') return 1;
+                return 0;
+            }
+        }
     }
-    if (memo[rem][player] != -1) return memo[rem][player];
+    if (memo[mask][turn] != -1) return memo[mask][turn];
+
     int ret = 0;
     rep(i, 0, n)
     {
-        if (rem + vec[i] <= total)
+        if (!(mask & (1<<i)))
         {
-            if (!player && !visited[rem + vec[i]])
+            int _mask = mask;
+            if (turn)
             {
-                visited[rem + vec[i]] = true;
-                ret |= solve(rem + vec[i], !player);
-                visited[rem + vec[i]] = false;
-                if (ret) break;
+                if (x[i] == 'B')
+                {
+                    _mask |= (1<<i);
+                    ret = max(ret, solve(_mask, !turn));
+                }
             }
-            else if (player && visited[rem + vec[i]])
+            else
             {
-                visited[rem + vec[i]] = false;
-                ret |= solve(rem + vec[i], !player);
-                visited[rem + vec[i]] = true;
+                if (x[i] == 'A')
+                {
+                    _mask |= (1<<i);
+                    ret = max(ret, solve(_mask, !turn));
+                }
             }
         }
-
     }
-    return memo[rem][player] = ret;
-
+    return memo[mask][turn] = ret;
 }
 
-int main()
+class RowAndCoins
 {
-    //ios_base::sync_with_stdio(0);
-    //cin.tie(0);
-    while(cin >> total >> n)
+public:
+    string getWinner(string cells)
     {
-        reset(visited, false);
         reset(memo, -1);
-        vec = vi(n);
-        rep(i, 0, n) cin >> vec[i];
-        cout << solve(0, 0) << endl;
+        x.clear();
+        cells.push_back('*');
+        rep(i, 0, sz(cells)-1)
+        {
+            if (cells[i] == cells[i+1]) continue;
+            x.push_back(cells[i]);
+        }
+        n = sz(x);
+        int cnt = 0;
+        rep(i, 0, sz(x)) cnt += (x[i] == 'A');
+        int ret = solve(0, 1);
+        if (ret) return "Alice";
+        return "Bob";
     }
-    return 0;
-}
+};
