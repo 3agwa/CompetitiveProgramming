@@ -1,3 +1,8 @@
+/*
+    it's obvious that we'll need max of manhattan distance to reach the desired cell
+    this is the case if they lie on the same color (if we'd picture the matrix as a chess board)
+    if not, we'll have to move up 1 time, hence we'll slightly edit the equation to get the desired result
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -28,6 +33,8 @@ using namespace std;
 #define endl '\n'
 #define output freopen("output.txt", "w", stdout)
 #define mp(x, y, z) {{x, y}, z}
+
+// SORRY KEE I'VE FAILED YOU! :<
 
 class SilverDistance
 {
