@@ -23,59 +23,73 @@ using namespace std;
 #define sz(v) ((int)((v).size()))
 #define pie  acos(-1)
 #define mod(n,m) ((n % m + m) % m)
-#define eps (1e-8)
+#define eps (1e-9)
 #define reset(n, m) memset(n, m, sizeof n)
 #define endl '\n'
 #define output freopen("output.txt", "w", stdout)
-#define mp(x, y, z) {x, {y, z}}
+#define mp(x, y, z) {{x, y}, z}
 
-int total, n, memo[1000001][2];
-bool visited[1000001];
-vi vec;
+string x;
+int n, memo[(1<<20) + 1][2];
 
-int solve(int rem, bool player)
+int solve(int mask, bool turn)
 {
-    if (rem == total)
+    if (__builtin_popcount(mask) == 1 && (mask & (1<<(n-1))))
     {
-        return (!player);
+        return !turn;
     }
-    if (memo[rem][player] != -1) return memo[rem][player];
+    if (memo[mask][turn] != -1) return memo[mask][turn];
     int ret = 0;
-    rep(i, 0, n)
+    rep(i, 0, n-1)
     {
-        if (rem + vec[i] <= total)
+        if (mask & (1<<i))
         {
-            if (!player && !visited[rem + vec[i]])
+            if (i+1 == n-1)
             {
-                visited[rem + vec[i]] = true;
-                ret |= solve(rem + vec[i], !player);
-                visited[rem + vec[i]] = false;
-                if (ret) break;
+                int _mask = mask;
+                _mask &= ~(1<<i);
+                _mask |= (1<<(i+1));
+                ret = max(ret, solve(_mask, !turn));
             }
-            else if (player && visited[rem + vec[i]])
+            if (i+1 < n-1 && !(mask & (1<<(i+1))))
             {
-                visited[rem + vec[i]] = false;
-                ret |= solve(rem + vec[i], !player);
-                visited[rem + vec[i]] = true;
+                int _mask = mask;
+                _mask &= ~(1<<i);
+                _mask |= (1<<(i+1));
+                ret = max(ret, solve(_mask, !turn));
+            }
+            if (i+3 == n-1)
+            {
+                int _mask = mask;
+                _mask &= ~(1<<i);
+                _mask |= (1<<(i+3));
+                ret = max(ret, solve(_mask, !turn));
+            }
+            if (i+3 < n && !(mask & (1<<(i+3))) && (mask & (1<<(i+1))) && (mask & (1<<(i+2))))
+            {
+                int _mask = mask;
+                _mask &= ~(1<<i);
+                _mask |= (1<<(i+3));
+                ret = max(ret, solve(_mask, !turn));
             }
         }
-
     }
-    return memo[rem][player] = ret;
-
+    return memo[mask][turn] = ret;
 }
 
-int main()
+class EllysCheckers
 {
-    //ios_base::sync_with_stdio(0);
-    //cin.tie(0);
-    while(cin >> total >> n)
+public:
+    string getWinner(string board)
     {
-        reset(visited, false);
         reset(memo, -1);
-        vec = vi(n);
-        rep(i, 0, n) cin >> vec[i];
-        cout << solve(0, 0) << endl;
+        x = board, n = sz(board);
+
+        int mask = 0;
+        rep(i, 0, sz(x)) if (x[i] == 'o') mask |= (1<<i);
+        int ret = solve(mask, 1);
+
+        if (!ret) return "NO";
+        return "YES";
     }
-    return 0;
-}
+};
