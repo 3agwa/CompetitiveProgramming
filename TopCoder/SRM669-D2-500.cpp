@@ -1,3 +1,6 @@
+/*
+    sort all the input then simulate the process mentioned in the problem
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
