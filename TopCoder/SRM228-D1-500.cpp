@@ -29,59 +29,43 @@ using namespace std;
 #define sz(v) ((int)((v).size()))
 #define pie  acos(-1)
 #define mod(n,m) ((n % m + m) % m)
-#define eps (1e-8)
+#define eps (1e-9)
 #define reset(n, m) memset(n, m, sizeof n)
 #define endl '\n'
 #define output freopen("output.txt", "w", stdout)
-#define mp(x, y, z) {x, {y, z}}
+#define mp(x, y, z) {{x, y}, z}
 
-int total, n, memo[1000001][2];
-bool visited[1000001];
 vi vec;
+int memo[51][51][2];
+bool visited[51][51][2];
 
-int solve(int rem, bool player)
+int solve(int i, int j, bool turn)
 {
-    if (rem == total)
+    if (i > j || j < i) return 0;
+    if (visited[i][j][turn]) return memo[i][j][turn];
+    visited[i][j][turn] = true;
+    int ret = -1e9;
+    if (turn)
     {
-        return (!player);
+        ret = max(ret, solve(i+1, j, !turn) + vec[i]);
+        ret = max(ret, solve(i, j-1, !turn) + vec[j]);
     }
-    if (memo[rem][player] != -1) return memo[rem][player];
-    int ret = 0;
-    rep(i, 0, n)
+    else
     {
-        if (rem + vec[i] <= total)
-        {
-            if (!player && !visited[rem + vec[i]])
-            {
-                visited[rem + vec[i]] = true;
-                ret |= solve(rem + vec[i], !player);
-                visited[rem + vec[i]] = false;
-                if (ret) break;
-            }
-            else if (player && visited[rem + vec[i]])
-            {
-                visited[rem + vec[i]] = false;
-                ret |= solve(rem + vec[i], !player);
-                visited[rem + vec[i]] = true;
-            }
-        }
-
+        ret = 1e9;
+        ret = min(ret, solve(i+1, j, !turn) - vec[i]);
+        ret = min(ret, solve(i, j-1, !turn) - vec[j]);
     }
-    return memo[rem][player] = ret;
-
+    return memo[i][j][turn] = ret;
 }
 
-int main()
+class BagsOfGold
 {
-    //ios_base::sync_with_stdio(0);
-    //cin.tie(0);
-    while(cin >> total >> n)
+public:
+    int netGain(vector <int> bags)
     {
         reset(visited, false);
-        reset(memo, -1);
-        vec = vi(n);
-        rep(i, 0, n) cin >> vec[i];
-        cout << solve(0, 0) << endl;
+        vec = bags;
+        return solve(0, sz(bags)-1, 1);
     }
-    return 0;
-}
+};
