@@ -1,3 +1,6 @@
+/*
+    represent the input as a mask, if the current bit is turned off, consider the possible moves and switch players  
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
