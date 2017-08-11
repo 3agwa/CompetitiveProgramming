@@ -1,3 +1,9 @@
+/*
+    if we were player 1, we'd like to maximize our profit
+    if we were player 2, we'd like to minimize player 1's profit
+    hence, if we need to subtract the greatest value of both ends
+    dp on those states along with player's turn and return the solution
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
