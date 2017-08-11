@@ -1,3 +1,8 @@
+/*
+    initially, we have to get the probability of ones in each interval
+    afterwards, dp on the indices with their possible values of K
+    the base case would be if current K is >= desired K we return true
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -35,11 +40,7 @@ bool visited[1001][1001];
 
 double solve(int idx, int hoba)
 {
-    if (idx == n)
-    {
-        cout << hoba << " " << k << endl;
-        return 1LL*hoba*100 >= 1LL*n*k;
-    }
+    if (idx == n) return 1LL*hoba*100 >= 1LL*n*k;
     if (visited[idx][hoba]) return memo[idx][hoba];
     visited[idx][hoba] = true;
     double ret = solve(idx+1, hoba) * (1.0 - prob[idx]) + solve(idx+1, hoba+1) * prob[idx];
