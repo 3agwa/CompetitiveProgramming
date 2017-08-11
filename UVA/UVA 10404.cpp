@@ -1,3 +1,10 @@
+/*
+    mark the cells that player 1 could reach with 1, all other cells are 0
+    to check if the current cell is reachable with a move from player 1
+    we need to check that cell i - vec[j] is not marked by player 1
+    also we need to check that this value is >= 0
+    if dp[mx] is visited by player 1, then player 1 wins
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
