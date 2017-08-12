@@ -36,9 +36,9 @@ int n, m;
 bool check(int level)
 {
     reset(hoba, false);
-    for(int i = 0; i+level < n; i++)
+    for(int i = 0; i+level <= n; i++)
     {
-        for(int j = 0; j+level < m; j++)
+        for(int j = 0; j+level <= m; j++)
         {
             bool yay = true;
             if (temp[i][j])
