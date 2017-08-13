@@ -1,3 +1,9 @@
+/*
+    enumerate all names and create a reverse map so we could output the names instead of their number
+    first off, run normal dfs to get the starting node for every component
+    then for each of those, run SCC and store the answer in a 2d array/vector
+    iterate over this structure and output the solution
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
