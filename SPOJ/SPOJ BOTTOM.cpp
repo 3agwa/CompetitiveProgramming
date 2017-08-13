@@ -1,3 +1,9 @@
+/*
+    by the definition of a sink, it's a SCC with no edges going out of this component to any other component
+    run SCC and mark each node to its component
+    iterate over all nodes and validate the condition mentioned above
+    if 1 node fails the test, neglect the whole component
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
