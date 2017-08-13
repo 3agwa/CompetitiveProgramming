@@ -1,3 +1,7 @@
+/*
+    get all SCCs, enumerate them and add edges between them if there was an existing edge in the main graph
+    run dfs to get largest clique
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
