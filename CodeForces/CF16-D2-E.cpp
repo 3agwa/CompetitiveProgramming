@@ -1,3 +1,8 @@
+/*
+    consider all the possibilities, a mask of (1<<n) size
+    now for each 2 pair of bits in the mask, they will try to eat each other with the same probability
+    increment all probabilities accordingly
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
