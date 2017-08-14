@@ -1,7 +1,7 @@
 /*
     since the output is dependent on nodes 2, 3, we'll combine their results into a super sink
     split the vertices as the graph is undirected
-    if the flow from 1 to sink == 2 then the solution is YES
+    if the flow from 1 to sink == 2 then the solution is YES meaning that the flow passes through node 2 and 3
 */
 #include <bits/stdc++.h>
 
