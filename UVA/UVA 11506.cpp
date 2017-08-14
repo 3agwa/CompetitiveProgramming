@@ -1,3 +1,8 @@
+/*
+    first off, do vertex splitting to allow us to pass a flow between a node and itself
+    add undirected edges according to the new indices of the vertex
+    solution would be the min cut of the graph
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
