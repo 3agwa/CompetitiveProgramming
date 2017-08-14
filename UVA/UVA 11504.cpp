@@ -1,3 +1,6 @@
+/*
+    get the topological sort of the graph then run dfs and count the # of components
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
