@@ -1,3 +1,7 @@
+/*
+    accumulate the pairs taken in the current state, we'll divide the solution by that number before returning
+    simulate the process stated in the statement and memoize over the values
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
