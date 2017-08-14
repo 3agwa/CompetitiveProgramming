@@ -1,3 +1,11 @@
+/*
+    split all the cells, flow would represent the value on the cell
+    if a cell could reach outside the borders, link it to the sink with flow infinity
+    if a cell has a lizard, link it with the source with flow 1
+    link each cell to its adjacent (diagonals included) cells within a jumping distance
+    running max flow would return the number of living lizards
+    compare it to the total number of lizards and output the solution accordingly
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
