@@ -1,3 +1,8 @@
+/*
+    after some brute-forcing, we can notice a relation between F(n) and steps required
+    steps = F(n+1)*2 - 1
+    apply fibonnacci using matrix power to solve the problem
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
