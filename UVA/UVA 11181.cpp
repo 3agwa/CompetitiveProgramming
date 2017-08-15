@@ -1,3 +1,11 @@
+/*
+    consider all masks with # of bits turned on = m
+    for each of those, calculate the probability that it occurs
+    for turned on bits, multiply its probability 
+    for turned off bits, multiply 1-its probability
+    accumulate all probabilities
+    for each i, output its probability / total sum of probabilities
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
