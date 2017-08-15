@@ -1,3 +1,10 @@
+/*
+    a correct implication refers to a SCC with no in/out edges from this component
+    idea: get all SCCs, iterate over the vertices
+    if vertex A is connected to vertex B and they're not in the same component
+    mark out degree of vertex A and in degree of vertex B
+    implications that needs to be proven would be the max(non-marked in degrees, non-marked out degrees)
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
