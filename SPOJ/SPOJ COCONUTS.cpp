@@ -1,3 +1,8 @@
+/*
+    add an edge between 2 pairs of friends
+    for people with value = 1, connect those to source, others to sink
+    solution would be the max flow of the constructed graph
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
