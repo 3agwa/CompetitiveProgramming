@@ -1,3 +1,10 @@
+/*
+    since each antenna reaches 4 adjacent cells, it's a good idea to represent the grid as a chess board
+    now, for black cells, if one contains a *, link it to the source, and link it to the 4 adjacent cells if they contain a *
+    for white cells, if one contains a *, link it to the sink
+    value of max flow will represent the number of cells that survived the flow
+    solution would be total number of "*" - max flow
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
