@@ -1,3 +1,10 @@
+/*
+    we'll use max flow to solve this problem
+    build a graph where pcs are connected to the sink and programs are connected to source
+    connect programs to pcs according to the input
+    if the value of max flow isn't the same as the # of programs needed, then we can't match the programs correctly
+    else we find which edge was used in the matching and output its letter accordingly
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
