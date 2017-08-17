@@ -1,3 +1,6 @@
+/*
+    no idea is associated with this problem, just simulating the required nothing more
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
