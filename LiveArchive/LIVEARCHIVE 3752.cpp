@@ -1,3 +1,6 @@
+/*
+    it's basic dp, just maximize over the elements that appeared before you that you're greater than
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
