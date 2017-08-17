@@ -1,3 +1,6 @@
+/*
+    each player will try to maximize his gain, when switching players, reverse the sign of the outcome as if we changed the player 
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
