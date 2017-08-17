@@ -1,3 +1,6 @@
+/*
+    brute force on the possible ranges and maximize over the intervals
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
