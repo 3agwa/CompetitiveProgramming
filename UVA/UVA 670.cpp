@@ -1,3 +1,14 @@
+/*
+    we'll use maximum bipartite matching to solve this problem
+    1- for each node on the path, find all interesting points that the dog 
+    could go to and come pack to node i+1 in the given time
+    
+    2- match the node on the path to all interesting points that applies the above condition
+    
+    3- the solution would be the N nodes + maximum matching output
+    
+    4- for each node, check if it's matched with an interesting place and output the solution accordingly
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
