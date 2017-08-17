@@ -1,3 +1,7 @@
+/*
+    if the sum of both arrays are not the same, return -1
+    else accumulate the absolute differences and return their value 
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
