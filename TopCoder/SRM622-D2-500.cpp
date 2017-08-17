@@ -1,3 +1,10 @@
+/*
+    store all powers of two in a range upto 1e6
+    for each candyCount, place in the first box it could fit in
+    accumulate all box sizes
+    place them in the first box they can fit in and return the answer
+    
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
