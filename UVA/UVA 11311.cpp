@@ -1,3 +1,8 @@
+/*
+    we'll simulate the process, cutting rows/cols around the coordinate point 
+    if the coordinates consists of 1 row and 1 col, this insures that the current player will lose
+    we won't need to process all the cases, if ret equals 1 at any moment, return the value after memoizing it
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
