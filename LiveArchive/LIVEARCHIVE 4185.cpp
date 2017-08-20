@@ -1,3 +1,7 @@
+/*
+    for each of the input connections, add an edge between relevent connections (have the same meaning)
+    run SCC, if a state and its inverse exist in the same SCC, this is an invalid case (output 0)
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
