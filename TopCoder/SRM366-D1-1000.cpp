@@ -1,3 +1,8 @@
+/*
+    the idea is to keep track of the current coordinates, the direction you came from and the remaining time you have
+    simulate the process mentioned in the problem, you have to make sure that the new coordinates are not the one you just came from
+    use dp to resolve the overlapping problems
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -23,120 +28,75 @@ using namespace std;
 #define sz(v) ((int)((v).size()))
 #define pie  acos(-1)
 #define mod(n,m) ((n % m + m) % m)
-#define eps (1e-8)
+#define eps (1e-9)
 #define reset(n, m) memset(n, m, sizeof n)
 #define endl '\n'
 #define output freopen("output.txt", "w", stdout)
-#define mp(x, y, z) {x, {y, z}}
+#define mp(x, y, z) {{x, y}, z}
 
-int n, m, _time, component_num;
-vvi node;
-vb visited;
-vi st, low, num, component;
+int dx[] = {0, 0, 1, -1};
+int dy[] = {1, -1, 0, 0};
+int n, m;
+vs vec;
+double ticket, red;
+double memo[50][50][4][101];
+bool visited[50][50][4][101];
 
-void SCC(int v)
+bool valid(int i, int j)
 {
-    low[v] = num[v] = ++_time;
-    visited[v] = true;
-    st.push_back(v);
-    for(auto i : node[v])
-    {
-        if (num[i] == -1) SCC(i);
-        if (visited[i]) low[v] = min(low[v], low[i]);
-    }
-    if (low[v] == num[v])
-    {
-        while(true)
-        {
-            int hoba = st.back();
-            st.pop_back();
-            component[hoba] = component_num;
-            visited[hoba] = false;
-            if (hoba == v) break;
-        }
-        component_num++;
-    }
+    return (i>=0 && j>=0 && i<n && j < m && vec[i][j] != 'X');
 }
 
-void init()
+double solve(int x, int y, int dir, int rem, int px, int py)
 {
-    int x = 2000;
-    node = vvi(x+1);
-    visited = vb(x);
-    low = vi(x);
-    num = vi(x, -1);
-    component = vi(x);
-    st.clear();
-    _time = 0, component_num = 0;
+    if (rem < 0) return 1e9;
+    if (vec[x][y] == 'C') return (!rem ? 0 : 1e9);
+    if (visited[x][y][dir][rem]) return memo[x][y][dir][rem];
+    visited[x][y][dir][rem] = true;
+    double ret = 1e9;
+    rep(d, 0, 4)
+    {
+        int xx = x + dx[d], yy = y + dy[d];
+        if (xx == px && yy == py) continue;
+
+        if (valid(xx, yy))
+        {
+            if (vec[xx][yy] == '.' || vec[xx][yy] == 'Y') ret = min(ret, solve(xx, yy, d, rem - 1, x, y));
+            if (vec[xx][yy] == 'S') ret = min(ret, ticket + solve(xx, yy, d, rem - 1, x, y));
+            if (vec[xx][yy] == 'T')
+            {
+                ret = min(ret, 0.7*red + solve(xx, yy, d, rem - 1, x, y));
+                ret = min(ret, solve(xx, yy, d, rem - 2, x, y));
+            }
+            if (vec[xx][yy] == 'C') ret = min(ret, solve(xx, yy, d, rem-1, x, y));
+        }
+    }
+    return memo[x][y][dir][rem] = ret;
 }
 
-int main()
+class LateForConcert
 {
-    ios_base::sync_with_stdio(0);
-    cin.tie(0);
-    mapii mp;
-    int idx = 0;
-    erep(i, 1, 1000)
+public:
+    double bestRoute(vector <string> cityMap, int timeLeft, double speedingTicket, double redLight)
     {
-        mp[i] = idx++;
-        mp[-i] = idx++;
+        reset(visited, false);
+        vec = cityMap, ticket = speedingTicket, red = redLight;
+        n = sz(vec), m = sz(vec[0]);
+        int a = -1, b = -1;
+        rep(i, 0, sz(vec))
+        {
+            rep(j, 0, sz(vec[i]))
+            {
+                if (vec[i][j] == 'Y')
+                {
+                    a = i, b = j;
+                    break;
+                }
+            }
+        }
+        double ret = solve(a, b, 4, timeLeft, -1, -1);
+        if (ret >= 1e9) return -1;
+        return ret;
     }
-    while(cin >> n >> m)
-    {
-        init();
-        while(m--)
-        {
-            int u, v;
-            cin >> u >> v;
-            int x = mp[u], y = mp[v];
-            if (u > 0 && v > 0)
-            {
-                //cout << x << " " << mp[-v] << endl;
-                //cout << y << " " << mp[-u] << endl;
-                node[x].push_back(mp[-v]);
-                node[y].push_back(mp[-u]);
-            }
-            else if (u > 0 && v < 0)
-            {
-                //cout << x << " " << mp[-v] << endl;
-                //cout << y << " " << y << endl;
-                node[x].push_back(mp[-v]);
-                node[y].push_back(y);
-            }
-            else if (u < 0 && v > 0)
-            {
-                //cout << x << " " << mp[-v] << endl;
-                //cout << y << " " << mp[-u] << endl;
-                node[x].push_back(mp[-v]);
-                node[y].push_back(mp[-u]);
-            }
-            else if (u < 0 && v < 0)
-            {
-                //cout << x << " " << mp[-v] << endl;
-                //cout << y << " " << mp[x] << endl;
-                node[x].push_back(mp[-v]);
-                node[y].push_back(x);
-            }
-        }
+};
 
-        rep(i, 0, 2*n)
-        {
-            if (num[i] == -1)
-            {
-                SCC(i);
-            }
-        }
-        bool yay = true;
-        for(int i = 0; i<2*n; i+=2)
-        {
-            if (component[i] == component[i+1])
-            {
-                yay = false;
-                break;
-            }
-        }
-        cout << yay << endl;
-    }
-
-    return 0;
-}
