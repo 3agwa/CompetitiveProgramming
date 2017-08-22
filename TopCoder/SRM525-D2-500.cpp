@@ -1,3 +1,8 @@
+/*
+    try to form a rectangle with K coins
+    then calculate the minimum # of steps 
+    needed to get rid of the extra rows/cols 
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
