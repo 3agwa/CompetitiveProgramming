@@ -1,3 +1,9 @@
+/*
+    after brute forcing some solutions, you'll be able to spot a pattern
+    index i will be maximum exactly i^m - (i-1)^m times
+    since we divide the final answer by N, hence we could write it as (i/N)^m 
+    multiply the above by i and accumulate it over the solution variable
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
