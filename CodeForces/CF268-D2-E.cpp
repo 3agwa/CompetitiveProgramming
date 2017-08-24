@@ -1,3 +1,8 @@
+/*
+    for each pair(i, j) where i < j, if we picked i and left out j 
+    then we'll come back to i with probability (1-p[j])*(p[i])*length[i]
+    so we'll keep track of all previous (p[i])*length[i] as we'll need them in the current step
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
