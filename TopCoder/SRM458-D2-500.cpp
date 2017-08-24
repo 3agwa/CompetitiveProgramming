@@ -1,3 +1,8 @@
+/*
+    try all possible combinations of 0s and 1s
+    0 will indicate that the ball will move towards the right, 1 indicates otherwise
+    for each 0, check the closest 1 to it and calculate the time they'll meet at
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
