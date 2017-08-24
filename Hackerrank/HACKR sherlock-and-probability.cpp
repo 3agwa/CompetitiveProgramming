@@ -1,3 +1,8 @@
+/*
+    by accumulating the array, we'll be able to process the interval [i, i+m] and interval [i-m, i]
+    sum the number of ones in those intervals and divide them by n*n
+    we'll also use gcd to simplify the numerator and denomenator
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
