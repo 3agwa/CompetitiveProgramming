@@ -1,3 +1,9 @@
+/*
+    the player might win in his first game
+    or in his second game after N loses 
+    of in his third game after 2N loses and so on..
+    keep adding turns till the abs difference is extremely small and doesn't affect the answer 
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
