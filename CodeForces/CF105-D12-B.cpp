@@ -1,3 +1,10 @@
+/*
+    first part of the solution is to distribute the sweets over the senators
+    after distributing all sweets, we'll begin to check whether we can win without killing senators or not
+    iterate over the mask, pick of the bit is turned on, otherwise we leave this senator 
+    count the picked senators, if they're > n/2 then we'll add the ratio
+    otherwise we'll add the ratio mentioned in the problem
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
