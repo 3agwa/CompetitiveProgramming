@@ -1,3 +1,8 @@
+/*
+	for each room, we'll try to place in it people from 0 -> remaining people
+	multiply the solution by rem people C picked people 
+	divide the probability by M as they are equiprobable
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
