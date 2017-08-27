@@ -1,3 +1,9 @@
+/*
+	we'll keep track of the passed weeks and the number of weeks we won
+	we can derive the overall sum and the current money i have from these two
+	we'll try to pick or leave the weeks, when we arrive at the base case
+	simply return the expected money to have given that we won X times
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
