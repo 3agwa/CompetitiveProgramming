@@ -1,3 +1,10 @@
+/*
+	idea is to calculate the expected ratings in elly's room
+	we'll iterate over each group, if the group contains elly, we'll take her rating
+	as we're unable to pick any other contestant from her room with her
+	else we get the average ratings of the group
+	we'll handle the different cases were the room sizes are equal or not
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
