@@ -1,0 +1,88 @@
+/*
+     the idea is, either we'll collect a key with the same index as our position (useless bomb)
+     or the key will basically transform into a new bomb for another index
+     useless key has prob p = 1/n, useful key has prob of 1 - n
+     lastly, we'll need to multiply our result by denominator to get the original numerator
+     get the gcd between numerator and denominator, divide both by the gcd, transform into a string and return the solution
+*/
+#include <bits/stdc++.h>
+
+using namespace std;
+
+#define ll long long
+#define ull unsigned long long
+#define vll vector<ll>
+#define pii pair<int, int>
+#define vii vector<pii>
+#define vs vector<string>
+#define vb vector<bool>
+#define vi vector<int>
+#define vd vector<double>
+#define vvi vector< vector<int> >
+#define vvii vector< vector< pii > >
+#define ld long double
+#define mapii map<int, int>
+#define mapsi map<string, int>
+#define erep(i, x, n) for (auto i = x; i<=(ll)(n); i++)
+#define rep(i, x, n) for(auto i = x; i<(ll)(n); i++)
+//#define INF  LLONG_MAX
+#define all(v) ((v).begin()), ((v).end())
+#define sz(v) ((int)((v).size()))
+#define pie  acos(-1)
+#define mod(n,m) ((n % m + m) % m)
+#define eps (1e-8)
+#define reset(n, m) memset(n, m, sizeof n)
+#define endl '\n'
+#define output freopen("output.txt", "w", stdout)
+#define mp(x, y, z) {x, {y, z}}
+
+ld fact[21];
+ld memo[21][21];
+bool visited[21][21];
+
+ld solve(int n, int m)
+{
+	if (m < 0) return 0;
+	if (!n) return 1.;
+	if (visited[n][m]) return memo[n][m];
+	visited[n][m] = true;
+	ld p = 1. / (ld)n;
+	ld ret = solve(n-1, m-1) * p + solve(n-1, m) * (1. - p);
+	return memo[n][m] = ret;
+}
+
+string get(ll a)
+{
+	string ret = "";
+	while(a)
+	{
+		int rem = a%10;
+		ret += rem + '0';
+		a /= 10;
+	}
+	reverse(all(ret));
+	return ret;
+}
+
+class KeysInBoxes
+{
+public:
+	string getAllKeys(int N, int M)
+	{
+		reset(visited, 0);
+		reset(memo, -1);
+		fact[0] = 1.;
+		for(ld i = 1; i<=N; i++) fact[(int)i] = fact[(int)(i-1)]*(ld)i;
+		ld ret = solve(N, M);
+		ld deno = fact[N];
+		ret = ret * deno;
+		//cout << ret << endl;
+		ll xx = round(ret), yy = deno;
+		//cout << xx << endl;
+		ll gcd = __gcd(xx, yy);
+		xx /= gcd, yy /= gcd;
+		string a = get(xx), b = get(yy);
+		return a + "/" + b;
+	}
+};
+
