@@ -1,0 +1,79 @@
+/*
+    we simply have 2 options, pick a red or a black card
+    when picking red, we gain 1 + fn(red-1, black)
+    we'll have to multiply that by probability of picking a red card (rem red) / (rem red + rem black)
+    for a black card, we'll have fn(red, black-1) - 1 * black's probability
+    we maximize over the different states of the game
+*/
+#include <bits/stdc++.h>
+
+using namespace std;
+
+#define ll long long
+#define ull unsigned long long
+#define vll vector<ll>
+#define pii pair<int, int>
+#define vii vector<pii>
+#define vs vector<string>
+#define vb vector<bool>
+#define vi vector<int>
+#define vd vector<double>
+#define vvi vector< vector<int> >
+#define vvii vector< vector< pii > >
+#define ld long double
+#define mapii map<int, int>
+#define mapsi map<string, int>
+#define erep(i, x, n) for (auto i = x; i<=(ll)(n); i++)
+#define rep(i, x, n) for(auto i = x; i<(ll)(n); i++)
+//#define INF  LLONG_MAX
+#define all(v) ((v).begin()), ((v).end())
+#define sz(v) ((int)((v).size()))
+#define pie  acos(-1)
+#define mod(n,m) ((n % m + m) % m)
+#define eps (1e-8)
+#define reset(n, m) memset(n, m, sizeof n)
+#define endl '\n'
+#define output freopen("output.txt", "w", stdout)
+#define mp(x, y, z) {x, {y, z}}
+
+double memo[2][5001];
+int n, m;
+
+/*double solve(int x, int y)
+ {
+ if (x == n && y == m)
+ return x - y;
+ if (memo[x][y] == memo[x][y])
+ return memo[x][y];
+ double ret = x - y, p = (n - x) + (m - y), xx = n - x, yy = m - y;
+ double r1 = 0, r2 = 0;
+ if (xx > 0)
+ r1 = solve(x + 1, y) * (xx / p);
+ if (yy > 0)
+ r2 = solve(x, y + 1) * (yy / p);
+ ret = max(ret, r1 + r2);
+ return memo[x][y] = ret;
+ }*/
+
+class RedIsGood
+{
+public:
+	double getProfit(int R, int B)
+	{
+		n = R, m = B;
+		reset(memo, 0);
+		int old = 0, neww = 1;
+		erep(i, 1, n)
+		{
+			erep(j, 0, m)
+			{
+				double pr = i / (double)(i+j);
+				double pb = j / (double)(i+j);
+				memo[neww][j] = max(0.0, pr * (1. + memo[old][j]) + pb * (memo[neww][j-1] - 1.));
+			}
+			swap(old, neww);
+		}
+		return memo[old][m];
+	}
+};
+
