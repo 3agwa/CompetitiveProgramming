@@ -1,0 +1,64 @@
+/*
+    trick with counting zeros is to keep multiplying our ratio by 10 till the it's > 0
+*/
+#include <bits/stdc++.h>
+
+using namespace std;
+
+#define ll long long
+#define ull unsigned long long
+#define vll vector<ll>
+#define pii pair<int, int>
+#define vii vector<pii>
+#define vs vector<string>
+#define vb vector<bool>
+#define vi vector<int>
+#define vd vector<double>
+#define vvi vector< vector<int> >
+#define vvii vector< vector< pii > >
+#define ld long double
+#define mapii map<int, int>
+#define mapsi map<string, int>
+#define erep(i, x, n) for (auto i = x; i<=(ll)(n); i++)
+#define rep(i, x, n) for(auto i = x; i<(ll)(n); i++)
+//#define INF  LLONG_MAX
+#define all(v) ((v).begin()), ((v).end())
+#define sz(v) ((int)((v).size()))
+#define pie  acos(-1)
+#define mod(n,m) ((n % m + m) % m)
+#define eps (1e-8)
+#define reset(n, m) memset(n, m, sizeof n)
+#define endl '\n'
+#define output freopen("output.txt", "w", stdout)
+#define mp(x, y, z) {x, {y, z}}
+
+int cnt[1000001];
+double p[1000001];
+
+int main()
+{
+	//ios_base::sync_with_stdio(0);
+	//cin.tie(0);
+	p[0] = 1, cnt[0] = 0;
+	double ratio = 1.;
+	for(ll i = 1; i <= 1000000; i++)
+	{
+		double temp = 1. / (i*(i+1));
+		p[i] = p[i-1] * (1. - temp);
+		ratio *= temp;
+		cnt[i] = cnt[i-1];
+		while(ratio < 1)
+		{
+			ratio *= 10;
+			cnt[i]++;
+		}
+	}
+	int n;
+	while(cin >> n)
+	{
+		cout << fixed << setprecision(6) << 1. - p[n] << " " << cnt[n]-1 << endl;
+	}
+
+	return 0;
+}
+
