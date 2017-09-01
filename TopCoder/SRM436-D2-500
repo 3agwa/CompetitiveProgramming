@@ -1,0 +1,79 @@
+/*
+    the idea is to compare the slopes when moving forward and backward
+    slopes should be strictly increasing when moving forward and strictly decreasing when moving backwards
+*/
+#include <bits/stdc++.h>
+
+using namespace std;
+
+#define ll long long
+#define ull unsigned long long
+#define vll vector<ll>
+#define pii pair<int, int>
+#define vii vector<pii>
+#define vs vector<string>
+#define vb vector<bool>
+#define vi vector<int>
+#define vd vector<double>
+#define vvi vector< vector<int> >
+#define vvii vector< vector< pii > >
+#define ld long double
+#define mapii map<int, int>
+#define mapsi map<string, int>
+#define erep(i, x, n) for (auto i = x; i<=(ll)(n); i++)
+#define rep(i, x, n) for(auto i = x; i<(ll)(n); i++)
+//#define INF  LLONG_MAX
+#define all(v) ((v).begin()), ((v).end())
+#define sz(v) ((int)((v).size()))
+#define pie  acos(-1)
+#define mod(n,m) ((n % m + m) % m)
+#define eps (1e-9)
+#define reset(n, m) memset(n, m, sizeof n)
+#define endl '\n'
+#define output freopen("output.txt", "w", stdout)
+#define mp(x, y, z) {x, {y, z}}
+
+double slope(double x1, double y1, double x2, double y2)
+{
+	return (y2 - y1) / (x2 - x1);
+}
+
+int dcmp(double a, double b)
+{
+	return fabs(a - b) <= eps ? 0 : a < b ? -1 : 1;
+}
+
+class BestView
+{
+public:
+	int numberOfBuildings(vector<int> heights)
+	{
+		int ret = 0, n = sz(heights);
+		rep(i, 0, n)
+		{
+			int cnt = 0;
+			double heh = -1e18;
+			rep(j, i+1, n)
+			{
+				double beb = slope(i, heights[i], j, heights[j]);
+				if (beb > heh)
+				{
+					heh = beb;
+					cnt++;
+				}
+			}
+			heh = 1e18;
+			for (int j = i - 1; j >= 0; j--)
+			{
+				double beb = slope(i, heights[i], j, heights[j]);
+				if (beb < heh)
+				{
+					heh = beb;
+					cnt++;
+				}
+			}
+			ret = max(ret, cnt);
+		}
+		return ret;
+	}
+};
