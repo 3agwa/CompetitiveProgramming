@@ -1,0 +1,116 @@
+/*
+    let's remodel the input as a sequence of brackets (), [], {}, <>
+    where the opening of the bracket represents a capital letter
+    closing of a bracket represent a small letter
+    
+    we'll keep track of when the opening and closing events occur
+    when 2 events happen ex: (), we'll put in the closing event's index, the index of the opening event and vise versa
+    
+    we'll use a segment tree to update those indices, segment tree is initialized with -1
+    for a given query, get the min/max of the range
+    if both min&max lies between the given range [l, r] then it's a valid segment
+*/
+#include <vector>
+#include <list>
+#include <map>
+#include <set>
+#include <queue>
+#include <deque>
+#include <stack>
+#include <bitset>
+#include <algorithm>
+#include <functional>
+#include <numeric>
+#include <utility>
+#include <sstream>
+#include <iostream>
+#include <iomanip>
+#include <cstdio>
+#include <cmath>
+#include <string.h>
+#include <cstdlib>
+#include <ctime>
+#include <assert.h>
+#include <unordered_map>
+#include <unordered_set>
+
+using namespace std;
+
+int mx[400004], mn[400004];
+
+void update(int node, int st, int en, int shemal, int yemeen, int val)
+{
+	if (st > en || st > yemeen || en < shemal) return;
+	if (shemal <= st && en <= yemeen)
+	{
+		mn[node] = mx[node] = val;
+		return;
+	}
+
+	int mid = (st+en)/2;
+
+	update(2*node, st, mid, shemal, yemeen, val);
+	update(2*node + 1, mid + 1, en, shemal, yemeen, val);
+
+	mx[node] = max(mx[2*node], mx[2*node + 1]);
+	mn[node] = min(mn[2*node], mn[2*node + 1]);
+}
+
+// max, min
+pair<int, int> query(int node, int st, int en, int shemal, int yemeen)
+{
+	if (st > en || st > yemeen || en < shemal) return {-1e9, 1e9};
+
+	if (shemal <= st && en <= yemeen) return {mx[node], mn[node]};
+
+	int mid = (st+en)/2;
+
+	pair<int, int> a = query(2*node, st, mid, shemal, yemeen);
+	pair<int, int> b = query(2*node + 1, mid + 1, en, shemal, yemeen);
+
+	return {max(a.first, b.first), min(a.second, b.second)};
+}
+
+int main()
+{
+	ios_base::sync_with_stdio(0);
+	cin.tie(0);
+	fill(mx, mx + 400004, -1);
+	fill(mn, mn + 400004, -1);
+	int offset = 'a' - 'A';
+	string x;
+	cin >> x;
+	int n = x.size();
+	stack<pair<char, int>> st;
+	for(int i = 0; i<n; i++)
+	{
+		char c = x[i];
+		if (st.empty()) st.push({c, i});
+		else
+		{
+			if (st.top().first + offset == c)
+			{
+				int a = st.top().second;
+				int b = i;
+				st.pop();
+				update(1, 0, n-1, a, a, b);
+				update(1, 0, n-1, b, b, a);
+			}
+			else st.push({c, i});
+		}
+	}
+	int q;
+	cin >> q;
+	while(q--)
+	{
+		int a, b;
+		cin >> a >> b;
+		a--, b--;
+		pair<int, int> hoba = query(1, 0, n-1, a, b);
+		if (a <= hoba.first && hoba.first <= b && a <= hoba.second && hoba.second <= b) cout << 1;
+		else cout << 0;
+	}
+
+	return 0;
+}
+
