@@ -1,0 +1,104 @@
+/*
+      we'll use sqrt decomposition to solve the problem
+      sort each block in increasing order
+      iterate over the blocks, if the block lies completely in our range, binary search on the solution
+      otherwise we'll iterate and increment the values 
+      
+      to modify a block, simply get the index of the old number, update it and sort the block once more
+*/
+#include <bits/stdc++.h>
+
+using namespace std;
+
+#define ll long long
+#define ull unsigned long long
+#define vll vector<ll>
+#define pii pair<int, int>
+#define vii vector<pii>
+#define vs vector<string>
+#define vb vector<bool>
+#define vi vector<int>
+#define vd vector<double>
+#define vvi vector< vector<int> >
+#define vvii vector< vector< pii > >
+#define ld long double
+#define mapii map<int, int>
+#define mapsi map<string, int>
+#define erep(i, x, n) for (auto i = x; i<=(ll)(n); i++)
+#define rep(i, x, n) for(auto i = x; i<(ll)(n); i++)
+#define INF  LLONG_MAX
+#define all(v) ((v).begin()), ((v).end())
+#define sz(v) ((int)((v).size()))
+#define pie  acos(-1)
+#define mod(n,m) ((n % m + m) % m)
+#define eps (1e-8)
+#define reset(n, m) memset(n, m, sizeof n)
+#define endl '\n'
+#define output freopen("output.txt", "w", stdout)
+#define mp(x, y, z) {x, {y, z}}
+
+int main()
+{
+	ios_base::sync_with_stdio(0);
+	cin.tie(0);
+	int n, q;
+	cin >> n >> q;
+	int sq = sqrt(n);
+	vvi vec(n);
+	vi arr(n+1), st(n+1), en(n+1), idx(n+1);
+	int c = 0;
+
+	for(int i = 1, j; i <= n; i+=sq)
+	{
+		c++;
+		st[c] = i;
+		for(j = i; j <= n && j < i+sq; j++)
+		{
+			cin >> arr[j];
+			idx[j] = c;
+			vec[c].push_back(arr[j]);
+		}
+		en[c] = j-1;
+		sort(all(vec[c]));
+	}
+
+	while(q--)
+	{
+		char c;
+		cin >> c;
+		if (c == 'C')
+		{
+			int a, b, x;
+			cin >> a >> b >> x;
+
+			int cnt = 0;
+
+			erep(i, idx[a], idx[b])
+			{
+				if (a <= st[i] && en[i] <= b) cnt += (upper_bound(all(vec[i]), x) - vec[i].begin());
+				else
+				{
+					erep(j, max(st[i], a), min(en[i], b)) cnt += (arr[j] <= x);
+				}
+			}
+			cout << cnt << endl;
+		}
+		else
+		{
+			int a, b;
+			cin >> a >> b;
+			rep(i, 0, sz(vec[idx[a]]))
+			{
+				if (vec[idx[a]][i] == arr[a])
+				{
+					arr[a] = vec[idx[a]][i] = b;
+					sort(all(vec[idx[a]]));
+					break;
+				}
+			}
+		}
+	}
+
+	return 0;
+}
+
