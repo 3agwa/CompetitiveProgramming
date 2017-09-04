@@ -1,0 +1,128 @@
+/*
+    we'll use a segment tree to keep track of the minimum numbers so far as well as their index in the original array
+    greedy pick the best solution from the segment tree while updating the best picked cost/resource
+    update the segment tree accordingly to pick the next minimum value
+*/
+#include <bits/stdc++.h>
+
+using namespace std;
+
+#define ll long long
+#define ull unsigned long long
+#define vll vector<ll>
+#define pii pair<int, int>
+#define vii vector<pii>
+#define vs vector<string>
+#define vb vector<bool>
+#define vi vector<int>
+#define vd vector<double>
+#define vvi vector< vector<int> >
+#define vvii vector< vector< pii > >
+#define ld long double
+#define mapii map<int, int>
+#define mapsi map<string, int>
+#define erep(i, x, n) for (auto i = x; i<=(ll)(n); i++)
+#define rep(i, x, n) for(auto i = x; i<(ll)(n); i++)
+#define INF  LLONG_MAX
+#define all(v) ((v).begin()), ((v).end())
+#define sz(v) ((int)((v).size()))
+#define pie  acos(-1)
+#define mod(n,m) ((n % m + m) % m)
+#define eps (1e-8)
+#define reset(n, m) memset(n, m, sizeof n)
+#define endl '\n'
+#define output freopen("output.txt", "w", stdout)
+#define mp(x, y, z) {x, {y, z}}
+
+pair<int, pii> arr[100001], tree[400004];
+
+void build(int node, int st, int en)
+{
+	if (st > en)
+		return;
+	if (st == en)
+	{
+		tree[node] = arr[st];
+		return;
+	}
+
+	int mid = (st + en) / 2;
+	build(2 * node, st, mid);
+	build(2 * node + 1, mid + 1, en);
+
+	tree[node] = min(tree[2 * node], tree[2 * node + 1]);
+}
+
+void update(int node, int st, int en, int shemal, int yemeen, pair<int, pii> val)
+{
+	if (st > en || st > yemeen || en < shemal) return;
+
+	if (shemal <= st && en <= yemeen)
+	{
+		tree[node] = val;
+		return;
+	}
+
+	int mid = (st+en)/2;
+	update(2*node, st, mid, shemal, yemeen, val);
+	update(2*node +1, mid + 1, en, shemal, yemeen, val);
+
+	tree[node] = min(tree[2*node], tree[2*node + 1]);
+}
+
+int main()
+{
+	//ios_base::sync_with_stdio(0);
+	//cin.tie(0);
+	int n;
+	cin >> n;
+	rep(i, 0, n)
+	{
+		cin >> arr[i].first >> arr[i].second.first;
+		arr[i].second.second = i;
+	}
+	build(1, 0, n-1);
+	vi vec;
+	int curr_c = 0, curr_r = 1;
+	rep(i, 0, n)
+	{
+			//cerr << "here: " << curr_c << " " << curr_r << endl;
+		int xx = -1, yy = -1, zz = -1;
+		while(true)
+		{
+			pair<int, pii> hoba = tree[1];
+			int a = hoba.first;
+			int b = hoba.second.first;
+			int idx = hoba.second.second;
+			if (a <= curr_r)
+			{
+				if (idx == n-1)
+				{
+					vec.push_back(n-1);
+					goto barra;
+				}
+				if (b > yy) xx = a, yy = b, zz = idx;
+				update(1, 0, n-1, idx, idx, {INT_MAX, {INT_MAX, idx}});
+			}
+			else break;
+		}
+		if (xx == -1 && (vec.empty() || vec.back() != n-1 ))
+		{
+			cout << "No such luck";
+			return 0;
+		}
+		int idx = zz;
+		curr_c = arr[idx].first, curr_r = arr[idx].second.first;
+		update(1, 0, n-1, idx, idx, {INT_MAX, {INT_MAX, idx}});
+		vec.push_back(idx);
+	}
+barra:
+	if (vec.empty() || vec.back() != n-1) cout << "No such luck";
+	else
+	{
+		cout << sz(vec) << endl;
+		rep(i, 0, sz(vec)) cout << vec[i] + 1 << " " ;
+	}
+	return 0;
+}
+
