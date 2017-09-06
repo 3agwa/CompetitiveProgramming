@@ -1,0 +1,99 @@
+/*
+    for each index, we want to find the number of trees i'm a prefix of
+    stand 1 index after those trees, that'd represent the number of valid trees i'm a part of
+    accumulate the values for each tree and return the answer
+*/
+#include <bits/stdc++.h>
+
+using namespace std;
+
+#define ll long long
+#define ull unsigned long long
+#define vll vector<ll>
+#define pii pair<int, int>
+#define vii vector<pii>
+#define vs vector<string>
+#define vb vector<bool>
+#define vi vector<int>
+#define vd vector<double>
+#define vvi vector< vector<int> >
+#define vvii vector< vector< pii > >
+#define ld long double
+#define mapii map<int, int>
+#define mapsi map<string, int>
+#define erep(i, x, n) for (auto i = x; i<=(ll)(n); i++)
+#define rep(i, x, n) for(auto i = x; i<(ll)(n); i++)
+#define INF  LLONG_MAX
+#define all(v) ((v).begin()), ((v).end())
+#define sz(v) ((int)((v).size()))
+#define pie  acos(-1)
+#define mod(n,m) ((n % m + m) % m)
+#define eps (1e-9)
+#define reset(n, m) memset(n, m, sizeof n)
+#define endl '\n'
+#define output freopen("output.txt", "w", stdout)
+#define mp(x, y, z) {x, {y, z}}
+
+const int MAX_CHAR = 26;
+
+struct node
+{
+	node* arr[26];
+	bool isWord;
+
+	node ()
+	{
+		rep(i, 0, 26) arr[i] = NULL;
+		isWord = false;
+	}
+};
+
+void insert(node* root, string &x)
+{
+	node* temp = root;
+	rep(i, 0, sz(x))
+	{
+		if (temp->arr[x[i]-'a'] == NULL)
+			temp->arr[x[i]-'a'] = new node();
+		temp = temp->arr[x[i]-'a'];
+	}
+	temp->isWord = true;
+}
+
+bool search(node* root, string x)
+{
+	rep(i, 0, sz(x))
+	{
+		if (root->arr[x[i]-'a'] == NULL) return false;
+		root = root->arr[x[i]-'a'];
+	}
+	return true;
+}
+
+class PrefixFreeSubsets
+{
+public:
+
+	long long cantPrefFreeSubsets(vector<string> words)
+	{
+		sort(all(words));
+		node* root[51];
+		ll ret[51];
+		ret[sz(words)] = 1;
+		rep(i, 0, sz(words)) root[i] = new node(), insert(root[i], words[i]);
+		for(int i = sz(words)-1; i>=0; i--)
+		{
+			ret[i] = ret[i+1];
+			int j = i+1;
+			for(j; j<sz(words); j++)
+			{
+				if (search(root[j], words[i])) continue;
+				break;
+			}
+			ret[i] += ret[j];
+		}
+		return ret[0];
+	}
+};
+
+
