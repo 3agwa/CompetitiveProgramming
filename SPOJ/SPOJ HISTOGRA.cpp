@@ -54,7 +54,7 @@ void build(int node, int st, int en, int id)
 
 pii query(int node, int st, int en, int shemal, int yemeen, int id)
 {
-	if (st > en || st > yemeen || en < shemal) return {1e9, -1};
+	if (st > en || st > yemeen || en < shemal) return {2e9, -1};
 
 	if (shemal <= st && en <= yemeen) return tree[node][id];
 
