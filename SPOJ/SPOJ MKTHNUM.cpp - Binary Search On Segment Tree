@@ -1,0 +1,107 @@
+/*
+    create a merge sort segment tree
+    we're searching for an index greater than K elements
+    by fixating our [l, r] and using binary search to check whether or not our current element 
+    is in fact >= K elements in our [l, r] range
+*/
+#include <bits/stdc++.h>
+
+using namespace std;
+
+#define ll long long
+#define ull unsigned long long
+#define vll vector<ll>
+#define pii pair<int, int>
+#define vii vector<pii>
+#define vs vector<string>
+#define vb vector<bool>
+#define vi vector<int>
+#define vd vector<double>
+#define vvi vector< vector<int> >
+#define vvii vector< vector< pii > >
+#define ld long double
+#define mapii map<int, int>
+#define mapsi map<string, int>
+#define erep(i, x, n) for (auto i = x; i<=(ll)(n); i++)
+#define rep(i, x, n) for(auto i = x; i<(ll)(n); i++)
+#define INF  LLONG_MAX
+#define all(v) ((v).begin()), ((v).end())
+#define sz(v) ((int)((v).size()))
+#define pie  acos(-1)
+#define mod(n,m) ((n % m + m) % m)
+#define eps (1e-8)
+#define reset(n, m) memset(n, m, sizeof n)
+#define endl '\n'
+#define output freopen("output.txt", "w", stdout)
+#define mp(x, y, z) {x, {y, z}}
+
+const int MAX = 100001;
+
+vi arr;
+vector<int> tree[4*MAX];
+
+void build(int node, int st, int en)
+{
+	if (st > en) return;
+
+	if (st == en)
+	{
+		tree[node].push_back(arr[st]);
+		return;
+	}
+
+	int mid = (st+en)/2;
+
+	build(2*node, st, mid);
+	build(2*node + 1, mid + 1, en);
+
+	merge(all(tree[2*node]), all(tree[2*node + 1]), back_inserter(tree[node]));
+}
+
+int query(int node, int st, int en, int shemal, int yemeen, int idx)
+{
+	if(st > en || st > yemeen || en < shemal) return 0;
+
+	if (shemal <= st && en <= yemeen) return upper_bound(all(tree[node]), idx) - tree[node].begin();
+
+	int mid = (st+en)/2;
+
+	return query(2*node, st, mid, shemal, yemeen, idx) + query(2*node + 1, mid + 1, en, shemal, yemeen, idx);
+}
+
+int main()
+{
+	ios_base::sync_with_stdio(0);
+	cin.tie(0);
+	int n, q;
+	cin >> n >> q;
+	arr = vi(n);
+	vi yay;
+	rep(i, 0, n)
+	{
+		cin >> arr[i];
+	}
+	build(1, 0, n-1);
+	sort(all(arr));
+
+	while(q--)
+	{
+		int l, r, idx;
+		cin >> l >> r >> idx;
+		l--, r--;
+
+		int st = 0, en = n-1, mid, ret = -1;
+
+		while(st <= en)
+		{
+			mid = (st+en)/2;
+			if (query(1, 0, n-1, l, r, arr[mid]) >= idx)
+				en = mid - 1, ret = arr[mid];
+			else st = mid + 1;
+		}
+		cout << ret << endl;
+	}
+
+	return 0;
+}
+
