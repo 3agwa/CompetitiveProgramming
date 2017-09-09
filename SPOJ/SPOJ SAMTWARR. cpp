@@ -1,0 +1,159 @@
+/*
+    we'll use segment tree to solve this problem
+    operations 0 and 1 are normal segment tree applications, trick is with operation 2
+    the trick is to build a segment tree based on a struct
+    each struch will contain left, right children and will contain the sum
+    this might look like a normal segment tree, but this allows us to swap in no time
+    for a swap operation, we'll just exchange the pointers carrying the rest of the segment tree below them
+    we'll update the new sum values when returning from a swap operation
+*/
+#include <bits/stdc++.h>
+
+using namespace std;
+
+#define ll long long
+#define ull unsigned long long
+#define vll vector<ll>
+#define pii pair<int, int>
+#define vii vector<pii>
+#define vs vector<string>
+#define vb vector<bool>
+#define vi vector<int>
+#define vd vector<double>
+#define vvi vector< vector<int> >
+#define vvii vector< vector< pii > >
+#define ld long double
+#define mapii map<int, int>
+#define mapsi map<string, int>
+#define erep(i, x, n) for (auto i = x; i<=(ll)(n); i++)
+#define rep(i, x, n) for(auto i = x; i<(ll)(n); i++)
+#define INF  LLONG_MAX
+#define all(v) ((v).begin()), ((v).end())
+#define sz(v) ((int)((v).size()))
+#define pie  acos(-1)
+#define mod(n,m) ((n % m + m) % m)
+#define eps (1e-8)
+#define reset(n, m) memset(n, m, sizeof n)
+#define endl '\n'
+#define output freopen("output.txt", "w", stdout)
+#define mp(x, y, z) {x, {y, z}}
+
+struct Node
+{
+	Node* left, *right;
+	ll sum;
+	Node()
+	{
+		left = NULL;
+		right = NULL;
+		sum = 0;
+	}
+};
+
+Node* build(int st, int en)
+{
+	if (st > en) return NULL;
+
+	Node* root = new Node();
+
+	if (st == en) return root;
+
+	int mid = (st+en)/2;
+
+	root->left = build(st, mid);
+	root->right = build(mid + 1, en);
+
+	return root;
+}
+
+void update(Node* root, int st, int en, int shemal, int yemeen, int val)
+{
+	if (st > en || st > yemeen || en < shemal) return;
+
+	if (shemal <= st && en <= yemeen)
+	{
+		root->sum = val;
+		return;
+	}
+
+	int mid = (st+en)/2;
+
+	update(root->left, st, mid, shemal, yemeen, val);
+	update(root->right, mid + 1, en, shemal, yemeen, val);
+
+	root->sum = root->left->sum + root->right->sum;
+}
+
+void swap(Node * &a, Node * &b, int st, int en, int shemal, int yemeen)
+{
+	if (st > en || st > yemeen || en < shemal) return;
+
+	if (shemal <= st && en <= yemeen)
+	{
+		swap(a, b);
+		return;
+	}
+
+	int mid = (st+en)/2;
+
+	swap(a->left, b->left, st, mid, shemal, yemeen);
+	swap(a->right, b->right, mid + 1, en, shemal, yemeen);
+
+	a->sum = a->left->sum + a->right->sum;
+	b->sum = b->left->sum + b->right->sum;
+}
+
+ll sum(Node* root, int st, int en, int shemal, int yemeen)
+{
+	if (st > en || st > yemeen || en < shemal) return 0;
+
+	if (shemal <= st && en <= yemeen) return root->sum;
+
+	int mid = (st+en)/2;
+
+	return sum(root->left, st, mid, shemal, yemeen) +
+		   sum(root->right, mid + 1, en, shemal, yemeen);
+}
+
+int main()
+{
+	//ios_base::sync_with_stdio(0);
+	//cin.tie(0);
+	int n, q;
+	cin >> n >> q;
+
+	Node* a = build(0, n-1);
+	Node* b = build(0, n-1);
+
+	while(q--)
+	{
+		int o;
+		cin >> o;
+		if (o == 0)
+		{
+			int arr, l, r;
+			cin >> arr >> l >> r;
+			Node * dummie;
+			if (!arr) dummie = a;
+			else dummie = b;
+			cout << sum(dummie, 0, n-1, l, r) << endl;
+		}
+		else if (o == 1)
+		{
+			int arr, idx, val;
+			cin >> arr >> idx >> val;
+			Node * dummie;
+			if (!arr) dummie = a;
+			else dummie = b;
+			update(dummie, 0, n-1, idx, idx, val);
+		}
+		else
+		{
+			int l, r;
+			cin >> l >> r;
+			swap(a, b, 0, n-1, l, r);
+		}
+	}
+	return 0;
+}
+
