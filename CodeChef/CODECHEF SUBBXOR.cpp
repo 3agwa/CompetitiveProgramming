@@ -1,3 +1,10 @@
+/*
+	we'll use a trie data structure to insert the xor-ed numbers
+	we'll query on how many subarrays in the tree who's xor with (number) is < k
+	
+	a details explanation could be found here:
+	https://github.com/MohamedNabil97/CompetitiveProgramming/blob/master/CodeChef/SUBBXOR.cpp
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
