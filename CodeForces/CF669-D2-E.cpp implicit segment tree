@@ -1,3 +1,11 @@
+/*
+	we'll use an implicit segment tree for this problem
+	
+	only create nodes when needed to save memory
+	for each value, we'll use a segment tree on the Time it appears at (insert/delete)
+	
+	on answering a query, access the segment tree of the current value and get the sum of numbers in range [0, T]
+*/
 #include <bits/stdc++.h>
 
 using namespace std;
