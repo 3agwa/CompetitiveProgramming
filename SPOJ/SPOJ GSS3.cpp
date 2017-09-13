@@ -1,3 +1,4 @@
+// reference https://github.com/rezwan4029/SPOJ-solutions/blob/master/1716.%20Can%20you%20answer%20these%20queries%20III%20%5BGSS3%5D.cpp
 #include <bits/stdc++.h>
 
 using namespace std;
