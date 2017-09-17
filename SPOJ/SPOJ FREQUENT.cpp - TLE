@@ -1,0 +1,234 @@
+/*
+    the idea is to build a segment tree on sqrt N blocks of the array
+    each tree keeps the maximum value in its block
+    
+    for answering a query, we get the maximums over each block
+    then for each maximum, we check its neighboring blocks if they contain values such as the block's maximum
+    
+    iterate over all updated block maximums and output the solution
+    
+    Complexity is O( NlogN + Q( SqrtN * LogN ) )
+*/
+#include <bits/stdc++.h>
+
+using namespace std;
+
+#define ll long long
+#define ull unsigned long long
+#define vll vector<ll>
+#define pii pair<int, int>
+#define vii vector<pii>
+#define vs vector<string>
+#define vb vector<bool>
+#define vi vector<int>
+#define vd vector<double>
+#define vvi vector< vector<int> >
+#define vvii vector< vector< pii > >
+#define ld long double
+#define mapii map<int, int>
+#define mapsi map<string, int>
+#define erep(i, x, n) for (auto i = x; i<=(ll)(n); i++)
+#define rep(i, x, n) for(auto i = x; i<(ll)(n); i++)
+#define INF  LLONG_MAX
+#define all(v) ((v).begin()), ((v).end())
+#define sz(v) ((int)((v).size()))
+#define pie  acos(-1)
+#define mod(n,m) ((n % m + m) % m)
+#define eps (1e-8)
+#define reset(n, m) memset(n, m, sizeof n)
+#define endl '\n'
+#define output freopen("output.txt", "w", stdout)
+#define mp(x, y, z) {x, {y, z}}
+
+int arr[100001], sq;
+
+vvii tree;
+
+void update(int node, int st, int en, int shemal, int yemeen, int idx)
+{
+	if (st > en || st > yemeen || en < shemal) return;
+
+	if (shemal <= st && en <= yemeen)
+	{
+		tree[idx][node].first++, tree[idx][node].second = shemal;
+		return;
+	}
+
+	int mid = (st+en)/2;
+
+	update(2*node, st, mid, shemal, yemeen, idx);
+	update(2*node + 1, mid + 1, en, shemal, yemeen, idx);
+
+	tree[idx][node] = max(tree[idx][2*node], tree[idx][2*node + 1]);
+}
+
+int query(int node, int st, int en, int shemal, int yemeen, int idx)
+{
+	if (st > en || st > yemeen || en < shemal) return 0;
+
+	if (shemal <= st && en <= yemeen)
+	{
+		if (shemal == tree[idx][node].second) return tree[idx][node].first;
+		return 0;
+	}
+
+	int mid = (st+en) / 2;
+
+	return query(2*node, st, mid, shemal, yemeen, idx) +
+			query(2*node + 1, mid + 1, en, shemal, yemeen, idx);
+}
+
+int main()
+{
+	ios_base::sync_with_stdio(0);
+	cin.tie(0);
+
+	int n, q;
+	while(cin >> n && n)
+	{
+		cin >> q;
+		int t = 1;
+		map<int, int> mp;
+
+		rep(i, 0, n)
+		{
+			cin >> arr[i];
+			if (!mp[arr[i]]) mp[arr[i]] = t++;
+			arr[i] = mp[arr[i]];
+		}
+
+		sq = 0;
+		while(sq*sq < n) sq++;
+		vii range(sq + 1);
+
+		int st = 0;
+		rep(i, 0, sq + 1)
+		{
+			range[i] = {st, min(st + sq - 1, n-1)};
+			st += sq;
+		}
+
+		tree = vvii(sq + 5, vii((4 * t) + 1));
+
+		rep(i, 0, sz(range))
+		{
+			erep(j, range[i].first, range[i].second)
+			{
+				update(1, 0, t, arr[j], arr[j], i);
+			}
+		}
+
+		while(q--) // O(sqrt(n) * log(n) )
+		{
+			int l, r;
+			cin >> l >> r;
+			l--, r--;
+
+			pair<int, pii> f1 = {0, {0, 0}}, f2 = {0, {0, 0} };
+
+			deque< pair<int, pii> > dq;
+			int ret = 0;
+			rep(i, 0, sz(range))
+			{
+				int a = range[i].first, b = range[i].second;
+
+				if (r < a) break;
+				if (a <= l && l <= b && a <= r && r <= b)
+				{
+					mapii mp;
+					erep(j, l, r)
+					{
+						mp[arr[j]]++;
+						ret = max(ret, mp[arr[j]]);
+					}
+					break;
+				}
+				else if (a <= l && l <= b)
+				{
+					if (l != a)
+					{
+						mapii mp;
+						erep(j, l, b)
+						{
+							mp[arr[j]]++;
+							f1 = max(f1, {mp[arr[j]], {arr[j], i}});
+						}
+					}
+					else
+					{
+						dq.push_back({tree[i][1].first, {tree[i][1].second, i}});
+					}
+				}
+				else if (a <= r && r <= b)
+				{
+					if (r != b)
+					{
+						mapii mp;
+						erep(j, a, r)
+						{
+							mp[arr[j]]++;
+							f2 = max(f2, {mp[arr[j]], {arr[j], i}});
+						}
+					}
+					else
+					{
+						dq.push_back({tree[i][1].first, {tree[i][1].second, i}});
+					}
+				}
+				else if (l <= a && b <= r)
+				{
+					dq.push_back({tree[i][1].first, {tree[i][1].second, i}});
+				}
+			}
+			if (f1.first) dq.push_front(f1);
+			if (f2.first) dq.push_back(f2);
+
+			vi yay(t + 1);
+			rep(i, 0, sz(dq))
+			{
+				int x = dq[i].second.first;
+				if (i-1 >= 0)
+				{
+					int y = dq[i-1].second.first;
+
+					if (x != y) dq[i].first += query(1, 0, t, x, x, dq[i-1].second.second);
+				}
+				if (i + 1 < sz(dq))
+				{
+					int y = dq[i+1].second.first;
+
+					if (x != y) dq[i].first += query(1, 0, t, x, x, dq[i+1].second.second);
+				}
+				/*int target = dq[i].second.first;
+
+				if (yay[target]) continue;
+				rep(j, 0, sz(dq))
+				{
+					if (i == j) continue;
+
+					int idx = dq[j].second.second;
+					//cout << i << " " << idx << " " << target << "\n";
+					dq[i].first += query(1, 0, t, target, target, idx);
+				}
+
+				ret = max(ret, dq[i].first);
+
+				yay[target] = true;*/
+			}
+
+			rep(i, 0, sz(dq)) yay[dq[i].second.first] += dq[i].first;
+
+			rep(i, 0, sz(yay)) ret = max(ret, yay[i]);
+
+			cout << ret << endl;
+		}
+
+	}
+
+
+
+
+
+	return 0;
+}
+
