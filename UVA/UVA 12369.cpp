@@ -1,3 +1,8 @@
+/*
+ *  for the given input, we'll pick a card, multiply it by its probability and move to the next state
+ *  we try to matck Joker1 to a suit, we'll do the same with Joker2
+ *  we'll have to minimize over the Joker cards to optain our solution
+ */
 #include <bits/stdc++.h>
 
 using namespace std;
