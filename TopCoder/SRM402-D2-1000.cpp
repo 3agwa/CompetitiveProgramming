@@ -1,3 +1,8 @@
+/*
+ *  we'll simulate the process, incrementing the denominator whenever we find 2 pairs to swap
+ *  if the deno is not 0, we can divide out solution by it
+ *  memoize in a vector to avoid overlapping
+ */
 #include <bits/stdc++.h>
 
 using namespace std;
