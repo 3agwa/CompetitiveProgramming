@@ -1,0 +1,38 @@
+/*
+ *  equation deduced from input/output samples
+ */
+#include <iostream>
+using namespace std;
+
+#define ll long long
+ll mod = 1e9 + 7;
+ll solve(int b, unsigned ll p)
+{
+    if (!p)
+        return 1;
+
+    ll ret = solve(b, p/2)%mod;
+    ret = (ret * ret)%mod;
+    if (p & 1)
+        ret *= b;
+
+    return ret%mod;
+}
+
+int main()
+{
+    ll n, m, k;
+    cin >> n >> m >> k;
+
+    n--, m--;
+    if (k == 1)
+        cout << solve(solve(2, n), m);
+    else
+    {
+        if (n%2 != m%2)
+            cout << 0;
+        else cout << solve(solve(2, n), m);
+    }
+
+	return 0;
+}
