@@ -1,0 +1,98 @@
+/*
+ *  substitute till you get g2(x), you'll find that the output is formed from a linear recurrence
+ *  thus we could construct a matrix to get the nth form of the given recurrence using matrix power
+ */
+#include <bits/stdc++.h>
+
+using namespace std;
+
+#define ll long long
+#define ull unsigned long long
+#define vll vector<ll>
+#define pii pair<int, int>
+#define vii vector<pii>
+#define vs vector<string>
+#define vb vector<bool>
+#define vi vector<int>
+#define vd vector<double>
+#define vvi vector< vector<int> >
+#define vvii vector< vector< pii > >
+#define ld long double
+#define mapii map<int, int>
+#define mapsi map<string, int>
+#define erep(i, x, n) for (auto i = x; i<=(ll)(n); i++)
+#define rep(i, x, n) for(auto i = x; i<(ll)(n); i++)
+#define INF  LLONG_MAX
+#define all(v) ((v).begin()), ((v).end())
+#define sz(v) ((int)((v).size()))
+#define pie  acos(-1)
+#define mod(n,m) ((n % m + m) % m)
+#define eps (1e-8)
+#define reset(n, m) memset(n, m, sizeof n)
+#define endl '\n'
+#define output freopen("output.txt", "w", stdout)
+#define mp(x, y, z) {x, {y, z}}
+
+const int mod = (int)1e9 + 7;
+
+vvi matrixUnit(int n)
+{
+	vvi res(n, vi(n));
+	for (int i = 0; i < n; i++)
+	res[i][i] = 1;
+	return res;
+}
+
+vvi matrixAdd(const vvi &a, const vvi &b)
+{
+	int n = a.size();
+	int m = a[0].size();
+	vvi res(n, vi(m));
+	for (int i = 0; i < n; i++)
+		for (int j = 0; j < m; j++)
+			res[i][j] = (a[i][j] + b[i][j]) % mod;
+	return res;
+}
+
+vvi matrixMul(const vvi &a, const vvi &b)
+{
+	int n = a.size();
+	int m = a[0].size();
+	int k = b[0].size();
+	vvi res(n, vi(k));
+	for (int i = 0; i < n; i++)
+		for (int j = 0; j < k; j++)
+				for (int p = 0; p < m; p++)
+						res[i][j] = (res[i][j] + (long long) a[i][p] * b[p][j]) % mod;
+	return res;
+}
+
+vvi matrixPow(const vvi &a, ll p)
+{
+	if (p == 0)
+		return matrixUnit(a.size());
+	if (p & 1)
+		return matrixMul(a, matrixPow(a, p - 1));
+	return matrixPow(matrixMul(a, a), p / 2);
+}
+
+int main()
+{
+	ios_base::sync_with_stdio(0);
+	cin.tie(0);
+
+	ll a, b, p, x;
+	cin >> a >> b >> p >> x;
+
+	vvi matrix(2, vi(2));
+	matrix[0][0] = a;
+	matrix[0][1] = b;
+	matrix[1][1] = 1;
+
+	vvi ret = matrixPow(matrix, p);
+
+	ll res = ret[0][0] * 1LL * x + ret[0][1];
+	cout << res % mod;
+
+	return 0;
+}
