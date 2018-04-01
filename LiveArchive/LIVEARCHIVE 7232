@@ -1,0 +1,199 @@
+/*
+ *  For every point, if there is a line segment from its coordinates to the 0 coordinates, this is the shortest distance
+ *  We have to handle the case where this segment is intersected by another point
+ *  It's easy to notice that an intersection will happen if there is a previous point with less slope than the one the current point has
+ *  We'll maintain a monotinic queue using a stack where we pop any previous slope greater that the current point
+ *  Update the point's distance and add it to the queue
+ *  We'll simulate the same process for the query points without adding them into our monotinic queue
+ */
+#include <bits/stdc++.h>
+
+using namespace std;
+
+typedef long long ll;
+typedef unsigned long long ull;
+typedef vector<ll> vll;
+typedef pair<int, int> pii;
+typedef vector<string> vs;
+typedef vector<bool> vb;
+typedef vector<int> vi;
+typedef vector<double> vd;
+typedef vector<vector<int> > vvi;
+typedef vector<pii> vii;
+typedef vector<vector<pii> > vvii;
+typedef long double ld;
+typedef map<int, int> mapii;
+typedef map<string, int> mapsi;
+
+#define erep(i, x, n) for (auto i = x; i<=(ll)(n); i++)
+#define rep(i, x, n) for(auto i = x; i<(ll)(n); i++)
+#define INF  LLONG_MAX
+#define all(v) ((v).begin()), ((v).end())
+#define sz(v) ((int)((v).size()))
+#define pi  acos(-1)
+#define mod(n,m) ((n % m + m) % m)
+#define eps (1e-8)
+#define reset(n, m) memset(n, m, sizeof n)
+#define endl '\n'
+#define output freopen("output.txt", "w", stdout)
+
+const int N = 1e5;
+
+ld x[N], y[N];
+
+ld d(ld x, ld y, ld xx, ld yy)
+{
+	return sqrt((xx - x) * (xx - x) + (yy - y) * (yy - y));
+}
+
+ld slope(ld x, ld y, ld xx, ld yy)
+{
+	return (yy - y) / (xx - x);
+}
+
+int dcmp(ld a, ld b)
+{
+	return (fabs(a - b) <= 1e-12 ? 0 : a < b ? -1 : 1);
+}
+
+int main()
+{
+	ios_base::sync_with_stdio(0);
+	cin.tie(0);
+
+	int tc;
+	cin >> tc;
+	while (tc--)
+	{
+		int n;
+		cin >> n;
+
+		rep(i, 0, n)
+		{
+			cin >> x[i] >> y[i];
+			if (i)
+				x[i] -= x[0], y[i] -= y[0];
+		}
+		x[0] = y[0] = 0;
+
+		stack<pair<ld, int>> st;
+
+		vector<ld> dist(n);
+		dist[0] = 0;
+		dist[n - 1] = y[n - 1];
+
+		for (int i = n - 2; i >= 1; i--)
+		{
+			ld s = slope(0, 0, x[i], y[i]);
+
+			while (!st.empty())
+			{
+				ld temp = st.top().first;
+				if (dcmp(s, temp) == -1)
+					st.pop();
+				else
+					break;
+			}
+
+			if (st.empty())
+				dist[i] = d(0, 0, x[i], y[i]);
+			else
+			{
+				int idx = st.top().second;
+
+				dist[i] = dist[idx] + d(x[i], y[i], x[idx], y[idx]);
+			}
+
+			if (i % 2 == 0)
+				st.push(
+				{ s, i });
+		}
+
+		vvi num(n);
+		int m;
+		ld sum = 0;
+		cin >> m;
+		map<pii, int> ans;
+		while (m--)
+		{
+			int u, c;
+			cin >> u >> c;
+			num[u].push_back(c);
+		}
+
+		rep(i, 0, n)
+			sort(num[i].rbegin(), num[i].rend());
+
+		for (auto i : num[0])
+			sum += i;
+		for (auto i : num[n - 1])
+			sum += (dist[n - 1] - i);
+
+		while (!st.empty())
+			st.pop();
+
+
+		for (int i = n - 2; i >= 1; i--)
+		{
+			ld s;
+			bool flag = true; // horizontal
+
+			if (x[i] == x[i + 1])
+				flag = false;
+
+			for (auto j : num[i])
+			{
+				int xx = x[i], yy = y[i];
+
+				if (flag)
+					xx -= j;
+				else
+				{
+					if (y[i] < y[i + 1])
+						yy += j;
+					else
+						yy -= j;
+				}
+//				cout << "-----> " << xx << " " << yy << endl;
+
+				s = slope(0, 0, xx, yy);
+				while (!st.empty())
+				{
+					ld temp = st.top().first;
+					if (dcmp(s, temp) == -1)
+						st.pop();
+					else
+						break;
+				}
+
+				if (st.empty())
+					sum += d(0, 0, xx, yy);
+				else
+				{
+					int idx = st.top().second;
+
+					sum += dist[idx] + d(xx, yy, x[idx], y[idx]);
+				}
+			}
+
+			s = slope(0, 0, x[i], y[i]);
+
+			while (!st.empty())
+			{
+				ld temp = st.top().first;
+				if (dcmp(s, temp) == -1)
+					st.pop();
+				else
+					break;
+			}
+
+			if (i % 2 == 0)
+				st.push(
+				{ s, i });
+
+		}
+		cout << fixed << setprecision(1) << sum << endl;
+	}
+
+	return 0;
+}
