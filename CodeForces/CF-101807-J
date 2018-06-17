@@ -1,0 +1,215 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+typedef long long ll;
+typedef unsigned long long ull;
+typedef vector<ll> vll;
+typedef pair<int, int> pii;
+typedef vector<string> vs;
+typedef vector<bool> vb;
+typedef vector<int> vi;
+typedef vector<double> vd;
+typedef vector<vector<int> > vvi;
+typedef vector<pii> vii;
+typedef vector<vector<pii> > vvii;
+typedef long double ld;
+typedef map<int, int> mapii;
+typedef map<string, int> mapsi;
+
+#define erep(i, x, n) for (auto i = x; i<=(ll)(n); i++)
+#define rep(i, x, n) for(auto i = x; i<(ll)(n); i++)
+#define INF  LLONG_MAX
+#define all(v) ((v).begin()), ((v).end())
+#define sz(v) ((int)((v).size()))
+#define pi  acos(-1)
+#define mod(n,m) ((n % m + m) % m)
+#define eps (1e-8)
+#define reset(n, m) memset(n, m, sizeof n)
+#define endl '\n'
+#define output freopen("output.txt", "w", stdout)
+#define mp(x, y, z) { x, {y, z } }
+
+/*
+ * make the tree rooted at 1
+ * dfs from root, build first level of lca while dfsing
+ * in[v] = ++id, out[v] = id; 3ashan hane3mel segment tree
+ * ama teegi query change fana meen el parent with respect to 1
+ * da hayeb2a el in time beta3o asghar, hamsek el subtree beta3et el child
+ * hazawed 3aleiha (old - new) val (ha lazy 3al subtree)
+ * ama teegi query of type 2 el answer hateb2a dist[qry(v)] + dist[qry(u)] - 2*dist[qry(lca)]
+ * hatala3 el answer based 3ala el raqam da even walla odd
+ */
+
+const int N = 5e5 + 10, lg = 20;
+
+int n, q, sp[N][lg], in[N], out[N], depth[N], id;
+vvii node;
+bool tree[4 * N], lazy[4 * N];
+
+void dfs(int v, int p)
+{
+	depth[v] = 1 + depth[p];
+	sp[v][0] = p;
+	in[v] = ++id;
+	for (auto i : node[v])
+		if (i.first != p)
+			dfs(i.first, v);
+	out[v] = id;
+}
+
+void build()
+{
+	rep(j, 1, lg)
+		erep(i, 1, n)
+			sp[i][j] = sp[sp[i][j - 1]][j - 1];
+}
+
+int LCA(int u, int v)
+{
+	if (depth[v] > depth[u])
+		swap(u, v);
+
+	int diff = depth[u] - depth[v];
+
+//	cout << u << endl;
+	for (int i = lg - 1; i >= 0; i--)
+		if (diff & (1 << i))
+			u = sp[u][i];
+
+	if (u == v)
+		return u;
+
+	for (int i = lg - 1; i >= 0; i--)
+		if (sp[u][i] != sp[v][i])
+			u = sp[u][i], v = sp[v][i];
+
+	return sp[u][0];
+}
+
+void propagate(int node, int st, int en)
+{
+	tree[node] ^= lazy[node];
+
+	if (st != en)
+	{
+		lazy[2 * node] ^= lazy[node];
+		lazy[2 * node + 1] ^= lazy[node];
+	}
+
+	lazy[node] = 0;
+}
+
+void update(int node, int st, int en, int shemal, int yemeen, bool val)
+{
+	propagate(node, st, en);
+
+	if (st > en || st > yemeen || en < shemal)
+		return;
+
+	if (shemal <= st && en <= yemeen)
+	{
+		lazy[node] ^= val;
+		propagate(node, st, en);
+		return;
+	}
+
+	int mid = (st + en) / 2;
+
+	update(2 * node, st, mid, shemal, yemeen, val);
+	update(2 * node + 1, mid + 1, en, shemal, yemeen, val);
+
+	tree[node] = tree[2 * node] + tree[2 * node + 1];
+}
+
+bool query(int node, int st, int en, int shemal, int yemeen)
+{
+	propagate(node, st, en);
+
+	if (st > en || st > yemeen || en < shemal)
+		return 0;
+
+	if (shemal <= st && en <= yemeen)
+		return tree[node];
+
+	int mid = (st + en) / 2;
+
+	return query(2 * node, st, mid, shemal, yemeen)
+			^ query(2 * node + 1, mid + 1, en, shemal, yemeen);
+}
+
+int dist(int a, int b)
+{
+	int lca = LCA(a, b);
+	int ret = query(1, 0, id, in[a], in[a]) + query(1, 0, id, in[b], in[b])
+			- 2ll * query(1, 0, id, in[lca], in[lca]);
+	return ret;
+}
+
+pii ed[N];
+
+void sha2labaz(int v, int p)
+{
+	for (auto i : node[v])
+		if (i.first != p)
+		{
+			sha2labaz(i.first, v);
+			if (i.second & 1)
+				update(1, 0, id, in[i.first], out[i.first], 1);
+		}
+}
+
+int main()
+{
+	ios_base::sync_with_stdio(0);
+	cin.tie(0);
+
+	cin >> n;
+	node = vvii(n + 1);
+	rep(i, 0, n-1)
+	{
+		int u, v, c;
+		cin >> u >> v >> c;
+		node[u].push_back(
+		{ v, c });
+		node[v].push_back(
+		{ u, c });
+		ed[i] = {u, v};
+	}
+
+	dfs(1, 1);
+	build();
+
+	sha2labaz(1, 1);
+
+	cin >> q;
+	while (q--)
+	{
+		ll t, a, b;
+		cin >> t >> a >> b;
+		if (t == 1)
+		{
+			ll ret = dist(a, b);
+//			cout << ret << endl;
+			if (ret & 1)
+				cout << "WE NEED BLACK PANDA\n";
+			else
+				cout << "JAKANDA FOREVER\n";
+		}
+		else
+		{
+			a--;
+			int u = ed[a].first, v = ed[a].second;
+
+			if (in[u] > in[v])
+				swap(u, v);
+
+			// u howa el parent, v howa el child
+			int old = dist(u, v);
+			if ((b - old) & 1)
+				update(1, 0, id, in[v], out[v], 1);
+		}
+	}
+
+	return 0;
+}
