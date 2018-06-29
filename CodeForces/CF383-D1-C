@@ -1,0 +1,204 @@
+// using hld we can query on the path of the given node from it to the root
+// by maintaining 2 segment trees for even and odd depths we could get the answer for our query
+// add all values with same depth[i]%2 and subtract the other
+// answer is arr[i] + return value from HLD
+
+#include <bits/stdc++.h>
+
+using namespace std;
+
+typedef long long ll;
+typedef unsigned long long ull;
+typedef vector<ll> vll;
+typedef pair<int, int> pii;
+typedef vector<string> vs;
+typedef vector<bool> vb;
+typedef vector<int> vi;
+typedef vector<double> vd;
+typedef vector<vector<int> > vvi;
+typedef vector<pii> vii;
+typedef vector<vector<pii> > vvii;
+typedef long double ld;
+typedef map<int, int> mapii;
+typedef map<string, int> mapsi;
+
+#define erep(i, x, n) for (auto i = x; i<=(ll)(n); i++)
+#define rep(i, x, n) for(auto i = x; i<(ll)(n); i++)
+#define INF  LLONG_MAX
+#define all(v) ((v).begin()), ((v).end())
+#define sz(v) ((int)((v).size()))
+#define pi  acos(-1)
+#define mod(n,m) ((n % m + m) % m)
+#define eps (1e-8)
+#define reset(n, m) memset(n, m, sizeof n)
+#define endl '\n'
+#define output freopen("output.txt", "w", stdout)
+#define mp(x, y, z) { x, {y, z} }
+
+const int N = 2e5 + 5;
+int even[4 * N], odd[4 * N], par[N], id, in[N], out[N], sz[N], nxt[N], depth[N],
+		arr[N];
+vvi node;
+
+void dfs(int v, int p)
+{
+	depth[v] = 1 + depth[p];
+	par[v] = p;
+	sz[v] = 1;
+	int idx = -1, mx = -1;
+	rep(i, 0, sz(node[v]))
+	{
+		int u = node[v][i];
+		if (u == p)
+			continue;
+		dfs(u, v);
+		sz[v] += sz[u];
+		if (sz[u] > mx) // get heaviest child
+			mx = sz[u], idx = i;
+	}
+	if (idx != -1)
+		swap(node[v][0], node[v][idx]); // move heaviest child to the begining of the vector
+}
+
+void hld(int v, int p = 0)
+{
+	in[v] = ++id;
+	for (auto u : node[v])
+	{
+		if (u == p)
+			continue;
+		nxt[u] = (u == node[v][0] ? nxt[v] : u); // first element in the current chain
+		hld(u, v);
+	}
+	out[v] = id;
+}
+
+void update(int node, int st, int en, int shemal, int yemeen, int val, int t)
+{
+	if (st > en || st > yemeen || en < shemal)
+		return;
+
+	if (shemal <= st && en <= yemeen)
+	{
+		if (t)
+			odd[node] += val;
+		else
+			even[node] += val;
+		return;
+	}
+
+	int mid = (st + en) / 2;
+
+	update(2 * node, st, mid, shemal, yemeen, val, t);
+	update(2 * node + 1, mid + 1, en, shemal, yemeen, val, t);
+
+	if (t)
+		odd[node] = odd[2 * node] + odd[2 * node + 1];
+	else
+		even[node] = even[2 * node] + even[2 * node + 1];
+}
+
+int query(int node, int st, int en, int shemal, int yemeen, int t)
+{
+
+	if (st > en || st > yemeen || en < shemal)
+		return 0;
+
+	if (shemal <= st && en <= yemeen)
+	{
+		if (t)
+			return odd[node];
+		return even[node];
+	}
+
+	int mid = (st + en) / 2;
+
+	return query(2 * node, st, mid, shemal, yemeen, t)
+			+ query(2 * node + 1, mid + 1, en, shemal, yemeen, t);
+}
+
+int etsha2lebFelHLD(int v)
+{
+	int u = 1, original = v;
+	int e = 0, o = 0;
+	while (nxt[v] != nxt[u])
+	{
+		int l = in[nxt[v]], r = in[v]; // [head, myself]
+		e += query(1, 0, id, l, r, 0);
+		o += query(1, 0, id, l, r, 1);
+		v = par[nxt[v]]; // move to the previous chain
+	}
+	e += query(1, 0, id, in[1], in[v], 0);
+	o += query(1, 0, id, in[1], in[v], 1);
+
+	if (depth[original] & 1)
+		e *= -1;
+	else
+		o *= -1;
+	return e + o;
+}
+
+int main()
+{
+	ios_base::sync_with_stdio(0);
+	cin.tie(0);
+
+	int n, q;
+	cin >> n >> q;
+	node = vvi(n + 1);
+	erep(i, 1, n)
+		cin >> arr[i];
+	rep(i, 0, n-1)
+	{
+		int u, v;
+		cin >> u >> v;
+		node[u].push_back(v);
+		node[v].push_back(u);
+	}
+	nxt[1] = 1;
+	dfs(1, 0);
+	hld(1);
+
+	while (q--)
+	{
+		int t, x, val;
+		cin >> t >> x;
+
+		if (t == 1)
+		{
+			cin >> val;
+			update(1, 0, id, in[x], in[x], val, depth[x] & 1);
+		}
+		else
+		{
+			cout << etsha2lebFelHLD(x) + arr[x] << endl;
+		}
+	}
+
+	return 0;
+}
+
+//23
+//1 2
+//2 3
+//3 4
+//2 5
+//2 6
+//6 7
+//7 8
+//6 9
+//9 10
+//9 11
+//2 12
+//12 13
+//13 14
+//12 15
+//15 16
+//16 17
+//15 18
+//1 19
+//19 20
+//1 21
+//21 22
+//1 23
+
