@@ -39,6 +39,7 @@ typedef pair<int, int> pii;
 const int N = 3e5 + 5;
 ll need[N];
 vi pos[N];
+
 struct tree
 {
 	long long val;
