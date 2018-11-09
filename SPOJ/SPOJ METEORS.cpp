@@ -9,6 +9,14 @@
  *
  *  Now for each index, we binary search on its answer and access the values using the persistent segment tree
  *  In the Tree struct, the variable "val" allows us to perform range sum update and range sum query as if we're applying lazy propagation
+ *
+ *  To further explain the use of variable "val", imagine that we want to update range [1, 8] with X
+ *  now when we use the update query and enter the range [1, 8], it will create a new node in the persistent version
+ *  and assigns to it the old value (copying the old node), then it adds X to node->val and returns
+ *
+ *  now let's query on this range but a bit differently, suppose we're standing on the node carrying range [1, 8]
+ *  node->val tells us the amount that should be added to this range, then when we query we return val + query(new range)
+ *  this implicitly applies the concept of lazy propagation and allows us to solve the question using the approach above
  */
 #include <bits/stdc++.h>
 
