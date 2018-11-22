@@ -1,3 +1,15 @@
+/*
+ *	we need to find the answer for a specific X given an interval [L, R] this often refers to line sweep
+ *	consider we have a valid windown for the current position, we need to find how many shops can deliver to my place
+ *	since the shops have different positions with different qualities, it's a good idea to generalize this form
+ *	we'll do that by stating for each shop, the quality it would have at X = 0
+ *	now for any given query, we could get the customer's quality at X = 0 and our answer would be
+ *	the sum of shops that have quality >= the customer's quality
+ *	since the values are too large, i use implicit segment tree to solve this problem
+ *	one more thing that will arise, the quality values could get -ve coordinates, it produces a bug in segment tree
+ *	a solution to this is to SHIFT the coordinates so that they're always non-negative
+ */
+
 #include <bits/stdc++.h>
 
 using namespace std;
